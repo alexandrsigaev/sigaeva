@@ -6,13 +6,13 @@ package ru.job4j;
 *@since 25.01.2018
 */
 
-public class Calculate{
+public class Calculate {
 
 	/**
 	*Конструктор, вывод строки в консоль.
 	*@param args - аргументы комндной строки
 	*/
-	public static void main(String[] args){
+	public static void main(String[] args) {
 		System.out.println("Hallo World!");
 	}
 
@@ -21,7 +21,7 @@ public class Calculate{
 	*@param name Your name.
 	*@return Three times Echo plus Your name
 	*/
-	public String echo (String name) {
+	public String echo(String name) {
 		return "Echo echo echo : " + name;
 	}
 }
