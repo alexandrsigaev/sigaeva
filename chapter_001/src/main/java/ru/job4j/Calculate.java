@@ -15,4 +15,13 @@ public class Calculate{
 	public static void main(String[] args){
 		System.out.println("Hallo World!");
 	}
+
+	/**
+	*Method echo.
+	*@param name Your name.
+	*@return Three times Echo plus Your name
+	*/
+	public String echo (String name) {
+		return "Echo echo echo : " + name;
+	}
 }
