@@ -13,19 +13,19 @@ import static org.hamcrest.core.Is.is;
  */
 public class DummyBotTest {
     @Test
-    public void whenGreeteBot () {
+    public void whenGreeteBot() {
         DummyBot bot = new DummyBot();
         assertThat(bot.answer("Привет, Бот"), is("Привет, умник"));
     }
 
     @Test
-    public void whetBuyBot () {
+    public void whetBuyBot() {
         DummyBot bot = new DummyBot();
         assertThat(bot.answer("Пока."), is("До скорой встречи."));
     }
 
     @Test
-    public void whenUnknownBot () {
+    public void whenUnknownBot() {
         DummyBot bot = new DummyBot();
         assertThat(bot.answer("Как дела?"), is("Это ставит меня в тупик"));
     }

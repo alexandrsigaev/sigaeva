@@ -12,7 +12,7 @@ public class Triangle {
     private Point b;
     private Point c;
 
-    public Triangle (Point a, Point b, Point c) {
+    public Triangle(Point a, Point b, Point c) {
         this.a = a;
         this.b = b;
         this.c = c;
@@ -61,7 +61,7 @@ public class Triangle {
      */
     private boolean exist(double ab, double ac, double bc) {
         boolean isExist = false;
-        if((ab + ac > bc) && (ab + bc > ac) && (bc + ac > ab)){
+        if ((ab + ac > bc) && (ab + bc > ac) && (bc + ac > ab)) {
             isExist = true;
         }
         return isExist;

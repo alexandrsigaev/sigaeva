@@ -14,8 +14,14 @@ import static org.hamcrest.core.Is.is;
 public class MaxTest {
 
     @Test
-    public void whenTakeArgsThenGetMax () {
+    public void whenTakeArgsThenGetMax() {
         Max maximum = new Max();
         assertThat(maximum.max(25, 100), is(100));
+    }
+
+    @Test
+    public void whenTakeTreeArgsThenGetMax() {
+        Max maximum = new Max();
+        assertThat(maximum.max(10, 200, 85), is(200));
     }
 }

@@ -17,7 +17,7 @@ public class CalculatorTest {
      * Test add
      */
     @Test
-    public void whenAddThenShouldSumIt () {
+    public void whenAddThenShouldSumIt() {
         final Calculator calc = new Calculator();
         calc.add(1, 1);
         final double result = calc.getResult();
@@ -28,7 +28,7 @@ public class CalculatorTest {
      * Test subtract
      */
     @Test
-    public void whenSubtractThenShouldDifferenceIt () {
+    public void whenSubtractThenShouldDifferenceIt() {
         final Calculator calc = new Calculator();
         calc.subtract(10, 1);
         final double result = calc.getResult();
@@ -39,7 +39,7 @@ public class CalculatorTest {
      * Test multiplication
      */
     @Test
-    public void whenMultiplicationThenShouldCompositionIt () {
+    public void whenMultiplicationThenShouldCompositionIt() {
         final Calculator calc = new Calculator();
         calc.multiplication(10, 10);
         final  double result = calc.getResult();
@@ -50,7 +50,7 @@ public class CalculatorTest {
      * Test div
      */
     @Test
-    public void whenDivThenShouldRatioIt () {
+    public void whenDivThenShouldRatioIt() {
         final Calculator calc = new Calculator();
         calc.div(100, 10);
         final double result = calc.getResult();
