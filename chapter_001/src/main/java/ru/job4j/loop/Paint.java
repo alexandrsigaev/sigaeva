@@ -1,5 +1,7 @@
 package ru.job4j.loop;
 
+import java.util.function.BiPredicate;
+
 /**
  * @author Sigaev Aleksandr (sigaev.aleksandr.v@yandex.ru)
  * @version 1.0
@@ -13,43 +15,24 @@ public class Paint {
      * @return
      */
     public String rightTrl(int height) {
-        StringBuilder screen = new StringBuilder();
-        int weight = height;
-        for (int row = 0; row != height; row++) {
-            for (int column = 0; column != weight; column++) {
-                if (row >= column) {
-                    screen.append("^");
-                } else {
-                    screen.append(" ");
-                }
-            }
-            screen.append(System.lineSeparator());
-        }
-        return screen.toString();
+        return this.loopBy(height, height, (row, column) -> row >= column);
     }
 
     public String leftTrl(int height) {
-        StringBuilder screen = new StringBuilder();
-        int weihgt = height;
-        for (int row = 0; row != height; row++) {
-            for (int column = 0; column != weihgt; column++) {
-                if (row >= weihgt - column - 1) {
-                    screen.append("^");
-                } else {
-                    screen.append(" ");
-                }
-            }
-            screen.append(System.lineSeparator());
-        }
-        return screen.toString();
+        return this.loopBy(height, height, (row, column) -> row >= height - column - 1);
     }
 
     public String pyramid(int heigt) {
+        return this.loopBy(heigt,
+                2 * heigt - 1,
+                (row, column) -> row >= heigt - column - 1 && row + heigt - 1 >= column);
+    }
+
+    private String loopBy(int height, int weight, BiPredicate<Integer, Integer> predict) {
         StringBuilder screen = new StringBuilder();
-        int weight = 2 * heigt - 1;
-        for (int row = 0; row != heigt; row++) {
+        for (int row = 0; row != height; row++) {
             for (int column = 0; column != weight; column++) {
-                if (row >= heigt - column - 1 && row + heigt - 1 >= column) {
+                if (predict.test(row, column)) {
                     screen.append("^");
                 } else {
                     screen.append(" ");
