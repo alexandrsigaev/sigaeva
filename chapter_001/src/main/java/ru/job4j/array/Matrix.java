@@ -16,7 +16,12 @@ public class Matrix {
         int[][] result = new int[size][size];
         for (int column = 0; column < size; column++) {
             for (int row = 0; row < size; row++) {
-                result[column][row] = (column == 0 || row == 0) ? column + row : column * row;
+                result[column][row] = column + row;
+            }
+        }
+        for (int column = 1; column < size; column++) {
+            for (int row = 1; row < size; row++) {
+                result[column][row] = column * row;
             }
         }
         
