@@ -13,8 +13,8 @@ import static org.hamcrest.core.Is.is;
 public class MatrixTest {
 
     @Test
-    public void whenTakeSiseThenGetMultiplicationTable() {
+    public void whenTakeSizeThenGetMultiplicationTable() {
         Matrix matrix = new Matrix();
-        assertThat(matrix.multiple(3), is(new int[][] {{0, 1, 2}, {1, 1, 2}, {2, 2, 4}}));
+        assertThat(matrix.multiple(3), is(new int[][] {{1, 2, 3}, {2, 4, 6}, {3, 6, 9}}));
     }
 }

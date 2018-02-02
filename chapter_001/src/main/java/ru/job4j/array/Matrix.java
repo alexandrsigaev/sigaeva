@@ -14,12 +14,10 @@ public class Matrix {
      */
     public int[][] multiple(int size) {
         int[][] result = new int[size][size];
-        for (int column = 0; column < size; column++) {
-            result[column][0] = column;
-            for (int row = 1; row < size; row++) {
-                result[column][row] = column * row;
+        for (int column = 1; column <= size; column++) {
+            for (int row = 1; row <= size; row++) {
+                result[column - 1][row - 1] = column * row;
             }
-            result[0][column] = column;
         }
         return result;
     }
