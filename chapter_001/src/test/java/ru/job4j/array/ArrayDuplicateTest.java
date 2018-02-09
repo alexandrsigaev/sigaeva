@@ -2,8 +2,6 @@ package ru.job4j.array;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -16,8 +14,8 @@ public class ArrayDuplicateTest {
 
     @Test
     public void whenRemoveDuplicatesThenArrayWithoutDuplicate() {
-        ArrayDuplicate duplicate = new ArrayDuplicate();
-        assertThat(duplicate.remove(new String[] {"Привет", "Мир", "Привет", "Супер", "Мир"}),
+        ArrayDuplicate remove = new ArrayDuplicate();
+        assertThat(remove.remove(new String[] {"Привет", "Мир", "Привет", "Супер", "Мир"}),
                 is(new String[] {"Привет", "Мир", "Супер"}));
     }
 }

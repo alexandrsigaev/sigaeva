@@ -7,10 +7,10 @@ package ru.job4j.loop;
  */
 public class Board {
     /**
-     * paint a chessboard size the length of the width
-     * @param width
-     * @param height
-     * @return
+     * Paint a chessboard size the length of the width.
+     * @param width board width
+     * @param height board height
+     * @return chessboard
      */
     public String paint(int width, int height) {
         StringBuilder screen = new StringBuilder();

@@ -15,7 +15,7 @@ public class CounterTest {
 
     @Test
     public void whenSumEvenNumbersFromOneToTenThenThirty() {
-        Counter count = new Counter();
-        assertThat(count.add(1, 10), is(30));
+        Counter adder = new Counter();
+        assertThat(adder.add(1, 10), is(30));
     }
 }

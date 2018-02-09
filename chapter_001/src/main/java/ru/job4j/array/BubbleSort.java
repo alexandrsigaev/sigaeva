@@ -6,11 +6,10 @@ package ru.job4j.array;
  * @since 29.01.2018
  */
 public class BubbleSort {
-
     /**
      * Sort array.
      * @param data source array
-     * @return
+     * @return sorted array
      */
     public int[] sort(int[] data) {
         for (int barrier = 0; barrier < data.length; barrier++) {

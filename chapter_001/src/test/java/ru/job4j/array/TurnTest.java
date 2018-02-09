@@ -14,13 +14,13 @@ public class TurnTest {
 
     @Test
     public void whenTakeEvenArrayThatGetFlipped() {
-        Turn mirror = new Turn();
-        assertThat(mirror.back(new int[] {1, 5, 4, 7}), is(new int[] {7, 4, 5, 1}));
+        Turn evenList = new Turn();
+        assertThat(evenList.back(new int[] {1, 5, 4, 7}), is(new int[] {7, 4, 5, 1}));
     }
 
     @Test
     public void whenTakeUnevenArrayThatGetFlipped() {
-        Turn mirror = new Turn();
-        assertThat(mirror.back(new int[] {1, 5, 4, 7, 9}), is(new int[] {9, 7, 4, 5, 1}));
+        Turn evenList = new Turn();
+        assertThat(evenList.back(new int[] {1, 5, 4, 7, 9}), is(new int[] {9, 7, 4, 5, 1}));
     }
 }

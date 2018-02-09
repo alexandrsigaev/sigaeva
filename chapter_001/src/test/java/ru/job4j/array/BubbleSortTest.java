@@ -14,8 +14,8 @@ public class BubbleSortTest {
 
     @Test
     public void whenTakeRandomArrayThatGetSort() {
-        BubbleSort bubble = new BubbleSort();
-        assertThat(bubble.sort(new int[] {1, 5, 4, 2, 3, 1, 7, 8, 0, 5}),
+        BubbleSort sortArray = new BubbleSort();
+        assertThat(sortArray.sort(new int[] {1, 5, 4, 2, 3, 1, 7, 8, 0, 5}),
                 is(new int[] {0, 1, 1, 2, 3, 4, 5, 5, 7, 8}));
     }
 

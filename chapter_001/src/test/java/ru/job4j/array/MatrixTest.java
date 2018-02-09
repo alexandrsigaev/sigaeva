@@ -14,7 +14,7 @@ public class MatrixTest {
 
     @Test
     public void whenTakeSizeThenGetMultiplicationTable() {
-        Matrix matrix = new Matrix();
-        assertThat(matrix.multiple(3), is(new int[][] {{1, 2, 3}, {2, 4, 6}, {3, 6, 9}}));
+        Matrix multiplicationTable = new Matrix();
+        assertThat(multiplicationTable.multiple(3), is(new int[][] {{1, 2, 3}, {2, 4, 6}, {3, 6, 9}}));
     }
 }

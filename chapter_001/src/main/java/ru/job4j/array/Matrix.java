@@ -6,11 +6,10 @@ package ru.job4j.array;
  * @since 29.01.2018
  */
 public class Matrix {
-
     /**
      * Creates a multiplication table with the specified size.
-     * @param size
-     * @return
+     * @param size matrix size
+     * @return multiplication table
      */
     public int[][] multiple(int size) {
         int[][] result = new int[size][size];

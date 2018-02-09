@@ -8,24 +8,25 @@ import java.util.function.BiPredicate;
  * @since 28.01.2018
  */
 public class Paint {
-
     /**
-     *
-     * @param height
-     * @return
+     * Builds a right-angled triangle.
+     * @param height the height of the edge of the triangle
+     * @return line when outputting to the console where a triangle
      */
     public String rightTrl(int height) {
         return this.loopBy(height, height, (row, column) -> row >= column);
     }
-
     public String leftTrl(int height) {
         return this.loopBy(height, height, (row, column) -> row >= height - column - 1);
     }
-
-    public String pyramid(int heigt) {
-        return this.loopBy(heigt,
-                2 * heigt - 1,
-                (row, column) -> row >= heigt - column - 1 && row + heigt - 1 >= column);
+    /**
+     * Builds a pyramid.
+     * @param height the height of the pyramid
+     * @return line when outputting to the console where a pyramid
+     */
+    public String pyramid(int height) {
+        return this.loopBy(height, 2 * height - 1,
+                (row, column) -> row >= height - column - 1 && row + height - 1 >= column);
     }
 
     private String loopBy(int height, int weight, BiPredicate<Integer, Integer> predict) {

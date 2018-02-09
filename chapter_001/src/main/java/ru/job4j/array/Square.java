@@ -6,7 +6,6 @@ package ru.job4j.array;
  * @since 29.01.2018
  */
 public class Square {
-
     /**
      *Fills an array with elements from 1 to bound squared.
      * @param bound number of elements in the array.

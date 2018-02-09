@@ -13,13 +13,13 @@ import static org.hamcrest.core.Is.is;
 public class FactorialTest {
     @Test
     public void whenCalculateFactorialForFiveThenOneHundredTwenty() {
-        Factorial factorial = new Factorial();
-        assertThat(factorial.calc(5), is(120));
+        Factorial five = new Factorial();
+        assertThat(five.calc(5), is(120));
     }
 
     @Test
     public void whenCalculateFactorialForZeroThenOne() {
-        Factorial factorial = new Factorial();
-        assertThat(factorial.calc(0), is(1));
+        Factorial zero = new Factorial();
+        assertThat(zero.calc(0), is(1));
     }
 }

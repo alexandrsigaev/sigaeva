@@ -8,7 +8,11 @@ import java.util.Arrays;
  * @since 29.01.2018
  */
 public class ArrayDuplicate {
-
+    /**
+     * Removing duplicate items in an array.
+     * @param array source array
+     * @return array without doubts
+     */
     public String[] remove(String[] array) {
         int lengthNewArray = array.length;
         for (int findElem = 0; findElem < lengthNewArray; findElem++) {

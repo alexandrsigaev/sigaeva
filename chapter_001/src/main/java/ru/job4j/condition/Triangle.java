@@ -17,7 +17,6 @@ public class Triangle {
         this.b = b;
         this.c = c;
     }
-
     /**
      * Метод вычисления полупериметра по длинам сторон.
      *
@@ -33,7 +32,6 @@ public class Triangle {
     public double period(double ab, double ac, double bc) {
         return (ab + ac + bc) / 2;
     }
-
     /**
      * Метод должен вычислить площадь треугольника.
      *
@@ -50,7 +48,6 @@ public class Triangle {
         }
         return rsl;
     }
-
     /**
      * Метод проверяет можно ли построить треугольник с такими длинами сторон.
      *

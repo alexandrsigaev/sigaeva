@@ -8,12 +8,12 @@ package ru.job4j.loop;
 public class Factorial {
     /**
      * Calculates the factorial of a number n.
-     * @param n
-     * @return
+     * @param number number from which you need to calculate the factorial
+     * @return factorial of a number
      */
-    public int calc(int n) {
+    public int calc(int number) {
         int factorial = 1;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= number; i++) {
             factorial *= i;
         }
         return factorial;

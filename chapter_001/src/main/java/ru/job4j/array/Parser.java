@@ -17,7 +17,6 @@ public class Parser {
         char[] arrOriginStr = original.toCharArray();
         char[] arrSubStr = sub.toCharArray();
         int countOfSubStr = 0;
-
         for (int countOfOriginSub = 0; countOfOriginSub < arrOriginStr.length; countOfOriginSub++) {
             if (arrOriginStr[countOfOriginSub] == arrSubStr[countOfSubStr] && countOfSubStr < arrSubStr.length) {
                 countOfSubStr++;
@@ -29,7 +28,6 @@ public class Parser {
                 countOfSubStr = 0;
             }
         }
-
         return result;
     }
 }

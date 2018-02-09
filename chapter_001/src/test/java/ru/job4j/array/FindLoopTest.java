@@ -14,13 +14,13 @@ public class FindLoopTest {
 
     @Test
     public void whenFindInvalidElemThenGetMinusOne() {
-        FindLoop find = new FindLoop();
-        assertThat(find.indexOf(new int[] {1, 7, 9}, 5), is(-1));
+        FindLoop unsupported = new FindLoop();
+        assertThat(unsupported.indexOf(new int[] {1, 7, 9}, 5), is(-1));
     }
 
     @Test
     public void whenFindCorrectElemThenGetHisNumber() {
-        FindLoop find = new FindLoop();
-        assertThat(find.indexOf(new int[] {1, 7, 9, 12}, 9), is(2));
+        FindLoop supported = new FindLoop();
+        assertThat(supported.indexOf(new int[] {1, 7, 9, 12}, 9), is(2));
     }
 }

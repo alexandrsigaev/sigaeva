@@ -14,7 +14,6 @@ public class Point {
         this.x = x;
         this.y = y;
     }
-
     /**
      *Method distanceTo.
      *@param that second Point

@@ -7,12 +7,11 @@ package ru.job4j.loop;
  * @since 27.01.2018
  */
 public class Counter {
-
     /**
      * The sum of even numbers in the range from start to finish.
-     * @param start
-     * @param finish
-     * @return
+     * @param start the first element
+     * @param finish the last element
+     * @return sum of elements from the first to the last
      */
     public int add(int start, int finish) {
         int sum = 0;

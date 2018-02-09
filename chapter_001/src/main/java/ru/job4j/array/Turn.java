@@ -6,11 +6,10 @@ package ru.job4j.array;
  * @since 29.01.2018
  */
 public class Turn {
-
     /**
-     *Flips the array
+     *Invert the array
       * @param data source array
-     * @return
+     * @return inverted array
      */
     public int[] back(int[] data) {
         for (int elem = 0; elem < data.length / 2; elem++) {
