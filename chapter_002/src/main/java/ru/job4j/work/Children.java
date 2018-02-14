@@ -9,6 +9,14 @@ public class Children {
     private int schoolNumber;
     private String schoolClass;
 
+    public int getSchoolNumber() {
+        return schoolNumber;
+    }
+
+    public String getSchoolClass() {
+        return schoolClass;
+    }
+
     public String doHomework(String homework) {
         return "Сочинение ...";
     }

@@ -8,8 +8,12 @@ package ru.job4j.work;
 public class Patient {
     private int socialSecurityNumber;
 
-    public void visitDoctor() {
+    public int getSocialSecurityNumber() {
+        return socialSecurityNumber;
+    }
 
+    public void visitDoctor() {
+        System.out.println("Пациент идет на прием к врачу");
     }
 
     public Medicament buyMedicaments(String recipe) {

@@ -11,7 +11,11 @@ public class Project {
     private int discription;
     private Engineer designer;
 
-    public void convertInPdf() {
+    public int getNubber() {
+        return nubber;
+    }
 
+    public void convertInPdf() {
+        System.out.println("Проект № " + this.nubber + " сконвертирован в PDF файл");
     }
 }

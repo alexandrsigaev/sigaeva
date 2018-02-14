@@ -11,8 +11,13 @@ import java.util.GregorianCalendar;
 public class Doctor extends Profession {
     private String specialization;
 
-    public void cure(Patient patient) {
+    public Doctor(String name, String surname, String patronymic, GregorianCalendar birthday) {
+        super(name, surname, patronymic, birthday);
+    }
 
+    public void cure(Patient patient) {
+        System.out.println(this.specialization + super.getName() + super.getPatronymic() +
+                " лечит больного c полисом № " + patient.getSocialSecurityNumber());
     }
 
     public Calendar getAppointment(Patient patient) {
