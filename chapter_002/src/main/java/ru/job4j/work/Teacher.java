@@ -16,8 +16,8 @@ public class Teacher extends Profession {
     }
 
     public void teach(Children children) {
-        System.out.println("Учитель " + super.getName() + " " + super.getPatronymic() + " по " + this.subject +
-                " проводит занятие для ученика из класса " + children.getSchoolClass());
+        System.out.println("Учитель " + super.getName() + " " + super.getPatronymic() + " по " + this.subject
+                + " проводит занятие для ученика из класса " + children.getSchoolClass());
     }
 
     public String getTask() {

@@ -16,8 +16,8 @@ public class Doctor extends Profession {
     }
 
     public void cure(Patient patient) {
-        System.out.println(this.specialization + super.getName() + super.getPatronymic() +
-                " лечит больного c полисом № " + patient.getSocialSecurityNumber());
+        System.out.println(this.specialization + super.getName() + super.getPatronymic()
+                + " лечит больного c полисом № " + patient.getSocialSecurityNumber());
     }
 
     public Calendar getAppointment(Patient patient) {
