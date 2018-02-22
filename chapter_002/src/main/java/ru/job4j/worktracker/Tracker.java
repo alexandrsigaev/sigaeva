@@ -21,6 +21,7 @@ public class Tracker {
 
     public void replace(String id, Item item) {
         this.items[this.findItemCount(findById(id))] = item;
+        item.setId(id);
     }
 
     public void delete(String id) {
