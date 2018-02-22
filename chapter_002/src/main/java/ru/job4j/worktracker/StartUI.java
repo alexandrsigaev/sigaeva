@@ -103,15 +103,24 @@ public class StartUI {
     }
 
     private void showMenu() {
-        System.out.println(
-                "------MENU------\n"
-                        + "0. Add new Item\n"
-                        + "1. Show all items\n"
-                        + "2. Edit item\n"
-                        + "3. Delete item\n"
-                        + "4. Find item by Id\n"
-                        + "5. Find items by name\n"
-                        + "6. Exit Program\n");
+        StringBuilder menu = new StringBuilder();
+        menu.append("------MENU------");
+        menu.append(System.lineSeparator());
+        menu.append("0. Add new Item");
+        menu.append(System.lineSeparator());
+        menu.append("1. Show all items");
+        menu.append(System.lineSeparator());
+        menu.append("2. Edit item");
+        menu.append(System.lineSeparator());
+        menu.append("3. Delete item");
+        menu.append(System.lineSeparator());
+        menu.append("4. Find item by Id");
+        menu.append(System.lineSeparator());
+        menu.append("5. Find items by name");
+        menu.append(System.lineSeparator());
+        menu.append("6. Exit Program");
+        menu.append(System.lineSeparator());
+        System.out.println(menu);
     }
 
     private void printInConsoleArrayOfItems(Item[] items) {
