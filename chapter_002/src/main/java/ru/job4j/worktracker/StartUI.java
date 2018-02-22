@@ -28,19 +28,19 @@ public class StartUI {
             String answer = this.input.ask("Select:");
             if (ADD.equals(answer)) {
                 this.addItem();
-            }else if (SHOW_ALL.equals(answer)) {
+            } else if (SHOW_ALL.equals(answer)) {
                 this.showItems();
-            }else if (EDIT.equals(answer)) {
+            } else if (EDIT.equals(answer)) {
                 this.editItems();
-            }else if (DELETE.equals(answer)) {
+            } else if (DELETE.equals(answer)) {
                 this.deleteItem();
-            }else if (FIND_BY_ID.equals(answer)) {
+            } else if (FIND_BY_ID.equals(answer)) {
                 this.findItemById();
-            }else if (FIND_BY_NAME.equals(answer)) {
+            } else if (FIND_BY_NAME.equals(answer)) {
                 this.findItemByName();
-            }else if (EXIT.equals(answer)){
+            } else if (EXIT.equals(answer)) {
                 exit = true;
-            }else {
+            } else {
                 System.out.println("Input Error");
             }
         }
@@ -68,7 +68,11 @@ public class StartUI {
     private void deleteItem() {
         System.out.println("------Delete ticket------");
         String delete = this.input.ask("enter the ID of ticket");
-        this.tracker.delete(delete);
+        if (this.tracker.findAll().length != 0) {
+            this.tracker.delete(delete);
+        } else {
+            System.out.println("------tickets are absent------");
+        }
         System.out.println("------Complete------");
     }
 
@@ -89,10 +93,10 @@ public class StartUI {
         System.out.println("----------Add new ticket--------------");
         Item create = this.createItem();
         this.tracker.add(create);
-        System.out.println("------Ticket with name: " + create.getName() + " and ID: " +create.getId() + " create------");
+        System.out.println("------Ticket with name: " + create.getName() + " and ID: " + create.getId() + " create------");
     }
 
-    private Item createItem(){
+    private Item createItem() {
         String name = this.input.ask("Enter the name of the ticket");
         String description = this.input.ask("Enter the description of the ticket");
         return new Item(name, description, (int) (System.currentTimeMillis() / 2560));
@@ -100,14 +104,14 @@ public class StartUI {
 
     private void showMenu() {
         System.out.println(
-                "------MENU------\n" +
-                "0. Add new Item\n" +
-                "1. Show all items\n" +
-                "2. Edit item\n" +
-                "3. Delete item\n" +
-                "4. Find item by Id\n" +
-                "5. Find items by name\n" +
-                "6. Exit Program\n");
+                "------MENU------\n"
+                        + "0. Add new Item\n"
+                        + "1. Show all items\n"
+                        + "2. Edit item\n"
+                        + "3. Delete item\n"
+                        + "4. Find item by Id\n"
+                        + "5. Find items by name\n"
+                        + "6. Exit Program\n");
     }
 
     private void printInConsoleArrayOfItems(Item[] items) {
@@ -115,7 +119,7 @@ public class StartUI {
             for (Item item : items) {
                 System.out.println("id: " + item.getId() + " 1name: " + item.getName() + " description: " + item.getDesc() + " create " + item.getCreated());
             }
-        }else {
+        } else {
             System.out.println("tickets not found");
         }
     }

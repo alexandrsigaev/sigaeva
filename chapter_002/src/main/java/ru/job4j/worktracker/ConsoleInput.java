@@ -7,7 +7,7 @@ import java.util.Scanner;
  * @author sigaevaleksandr
  * @since 21.02.2018
  */
-public class ConsoleInput implements Input{
+public class ConsoleInput implements Input {
     @Override
     public String ask(String question) {
         Scanner scanner = new Scanner(System.in);
