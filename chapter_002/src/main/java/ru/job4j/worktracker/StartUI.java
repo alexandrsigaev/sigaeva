@@ -58,7 +58,7 @@ public class StartUI {
         System.out.println("------Found tickets------");
         Item find = this.tracker.findById(id);
         if (find != null) {
-            System.out.println("id: " + find.getId() + " name: " + find.getName() + " description: " + find.getDesc() + " create " + find.getCreated());
+            System.out.println(String.format("id: %s name: %s description: %s create: %s", find.getId(), find.getName(), find.getDesc(), find.getCreated()));
         } else {
             System.out.println("ticket not found");
         }
@@ -126,7 +126,7 @@ public class StartUI {
     private void printInConsoleArrayOfItems(Item[] items) {
         if (items.length != 0) {
             for (Item item : items) {
-                System.out.println("id: " + item.getId() + " 1name: " + item.getName() + " description: " + item.getDesc() + " create " + item.getCreated());
+                System.out.println(String.format("id: %s name: %s description: %s create: %s", item.getId(), item.getName(), item.getDesc(), item.getCreated()));
             }
         } else {
             System.out.println("tickets not found");
