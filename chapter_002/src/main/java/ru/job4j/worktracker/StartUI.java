@@ -21,29 +21,21 @@ public class StartUI {
         this.tracker = tracker;
     }
 
+
+
     public void init() {
-        boolean exit = false;
-        while (!exit) {
-            this.showMenu();
-            String answer = this.input.ask("Select:");
-            if (ADD.equals(answer)) {
-                this.addItem();
-            } else if (SHOW_ALL.equals(answer)) {
-                this.showItems();
-            } else if (EDIT.equals(answer)) {
-                this.editItems();
-            } else if (DELETE.equals(answer)) {
-                this.deleteItem();
-            } else if (FIND_BY_ID.equals(answer)) {
-                this.findItemById();
-            } else if (FIND_BY_NAME.equals(answer)) {
-                this.findItemByName();
-            } else if (EXIT.equals(answer)) {
-                exit = true;
-            } else {
-                System.out.println("Input Error");
+        MenuTracker menu = new MenuTracker(this.input, this.tracker);
+        menu.fillAction();
+        do {
+            System.out.println("------MENU------");
+            menu.show();
+            System.out.println("6. Exit Program");
+            String key = input.ask("Select : ");
+            if (key.equals("6")){
+                break;
             }
-        }
+            menu.select(Integer.valueOf(key));
+        } while (true);
     }
 
     private void findItemByName() {

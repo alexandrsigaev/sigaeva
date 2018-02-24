@@ -149,7 +149,6 @@ public class StartUITest {
                 .add("4. Find item by Id")
                 .add("5. Find items by name")
                 .add("6. Exit Program")
-                .add("")
                 .toString();
         return menu;
 
