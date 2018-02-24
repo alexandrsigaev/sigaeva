@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.StringJoiner;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -34,15 +35,12 @@ public class PaintTest {
     public void whenDrawSquare() {
         new Paint().draw(new Square());
         assertThat(new String(out.toByteArray()), is(
-                new StringBuilder()
-                        .append("++++")
-                        .append(System.lineSeparator())
-                        .append("+  +")
-                        .append(System.lineSeparator())
-                        .append("+  +")
-                        .append(System.lineSeparator())
-                        .append("++++")
-                        .append(System.lineSeparator())
+                new StringJoiner(System.lineSeparator())
+                        .add("++++")
+                        .add("+  +")
+                        .add("+  +")
+                        .add("++++")
+                        .add("")
                         .toString()
                 )
         );
@@ -52,13 +50,11 @@ public class PaintTest {
     public void whenDrawTriangle() {
         new Paint().draw(new Triangle());
         assertThat(new String(out.toByteArray()), is(
-                new StringBuilder()
-                        .append("  +  ")
-                        .append(System.lineSeparator())
-                        .append(" +++ ")
-                        .append(System.lineSeparator())
-                        .append("+++++")
-                        .append(System.lineSeparator())
+                new StringJoiner(System.lineSeparator())
+                        .add("  +  ")
+                        .add(" +++ ")
+                        .add("+++++")
+                        .add("")
                         .toString()
                 )
         );

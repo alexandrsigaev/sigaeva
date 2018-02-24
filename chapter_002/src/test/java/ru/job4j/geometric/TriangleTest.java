@@ -2,6 +2,8 @@ package ru.job4j.geometric;
 
 import org.junit.Test;
 
+import java.util.StringJoiner;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -17,13 +19,10 @@ public class TriangleTest {
         assertThat(
                 triangle.draw(),
                 is(
-                        new StringBuilder()
-                                .append("  +  ")
-                                .append(System.lineSeparator())
-                                .append(" +++ ")
-                                .append(System.lineSeparator())
-                                .append("+++++")
-                                .append(System.lineSeparator())
+                        new StringJoiner(System.lineSeparator())
+                                .add("  +  ")
+                                .add(" +++ ")
+                                .add("+++++")
                                 .toString()
                 )
         );

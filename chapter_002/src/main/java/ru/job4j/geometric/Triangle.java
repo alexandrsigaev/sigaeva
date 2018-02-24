@@ -1,5 +1,7 @@
 package ru.job4j.geometric;
 
+import java.util.StringJoiner;
+
 /**
  * Class
  *
@@ -9,13 +11,10 @@ package ru.job4j.geometric;
 public class Triangle implements Shape {
     @Override
     public String draw() {
-        StringBuilder triangle = new StringBuilder();
-        triangle.append("  +  ");
-        triangle.append(System.lineSeparator());
-        triangle.append(" +++ ");
-        triangle.append(System.lineSeparator());
-        triangle.append("+++++");
-        triangle.append(System.lineSeparator());
+        StringJoiner triangle = new StringJoiner(System.lineSeparator());
+        triangle.add("  +  ");
+        triangle.add(" +++ ");
+        triangle.add("+++++");
         return triangle.toString();
     }
 }

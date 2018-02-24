@@ -1,5 +1,7 @@
 package ru.job4j.geometric;
 
+import java.util.StringJoiner;
+
 /**
  * Class
  *
@@ -9,15 +11,11 @@ package ru.job4j.geometric;
 public class Square implements Shape {
     @Override
     public String draw() {
-        StringBuilder square = new StringBuilder();
-        square.append("++++");
-        square.append(System.lineSeparator());
-        square.append("+  +");
-        square.append(System.lineSeparator());
-        square.append("+  +");
-        square.append(System.lineSeparator());
-        square.append("++++");
-        square.append(System.lineSeparator());
+        StringJoiner square = new StringJoiner(System.lineSeparator());
+        square.add("++++");
+        square.add("+  +");
+        square.add("+  +");
+        square.add("++++");
         return square.toString();
     }
 }
