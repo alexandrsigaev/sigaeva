@@ -14,4 +14,23 @@ public class ConsoleInput implements Input {
         System.out.println(question);
         return scanner.nextLine();
     }
+
+    @Override
+    public int ask(String question, int[] range) throws MenuOutException {
+        int key = Integer.valueOf(this.ask(question));
+        boolean exit = false;
+
+        for (int element : range) {
+            if (element == key) {
+                exit = true;
+                break;
+            }
+        }
+
+        if (exit) {
+            return key;
+        } else {
+            throw new MenuOutException("Enter invalid count");
+        }
+    }
 }

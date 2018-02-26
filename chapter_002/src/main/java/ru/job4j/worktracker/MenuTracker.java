@@ -10,6 +10,7 @@ public class MenuTracker {
 
     private Input input;
     private Tracker tracker;
+
     private UserAction[] actions = new UserAction[6];
 
     public MenuTracker(Input input, Tracker tracker) {
@@ -32,10 +33,18 @@ public class MenuTracker {
 
     public void show() {
         for (UserAction action : actions) {
-            if (action !=null){
+            if (action != null) {
                 System.out.println(action.info());
             }
         }
+    }
+
+    public int[] getRange() {
+        int[] range = new int[actions.length + 1];
+        for (int count = 0; count < actions.length + 1; count++) {
+            range[count] = count;
+        }
+        return range;
     }
 
     private class AddItem implements UserAction {

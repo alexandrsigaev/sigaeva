@@ -52,7 +52,7 @@ public class StartUITest {
         tracker.add(test3);
         Input input = new StubInput(new String[] {"1", "6"});
         new StartUI(input, tracker).init();
-        assertThat(new String (out.toByteArray()), is(
+        assertThat(new String(out.toByteArray()), is(
                 new StringJoiner(System.lineSeparator())
                         .add(printMenu())
                         .add("------All tickets------")

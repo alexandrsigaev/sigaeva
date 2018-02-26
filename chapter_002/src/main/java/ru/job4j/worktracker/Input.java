@@ -7,4 +7,6 @@ package ru.job4j.worktracker;
  */
 public interface Input {
     String ask(String question);
+
+    int ask(String question, int[] range) throws MenuOutException;
 }
