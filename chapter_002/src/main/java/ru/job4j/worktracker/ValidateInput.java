@@ -6,7 +6,18 @@ package ru.job4j.worktracker;
  * @author sigaevaleksandr
  * @since 26.02.2018
  */
-public class ValidateInput extends ConsoleInput {
+public class ValidateInput implements Input {
+
+    private final Input input;
+
+    public ValidateInput(final Input input) {
+        this.input = input;
+    }
+
+    @Override
+    public String ask(String question) {
+        return this.input.ask(question);
+    }
 
     @Override
     public int ask(String question, int[] range) {
@@ -14,7 +25,7 @@ public class ValidateInput extends ConsoleInput {
         boolean invalid = true;
         do {
             try {
-                key = Integer.valueOf(super.ask(question, range));
+                key = Integer.valueOf(this.input.ask(question, range));
                 invalid = false;
             } catch (NumberFormatException nfe) {
                 System.out.println("Please enter validate count");

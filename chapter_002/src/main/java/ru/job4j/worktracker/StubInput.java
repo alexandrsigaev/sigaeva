@@ -21,6 +21,20 @@ public class StubInput implements Input {
 
     @Override
     public int ask(String question, int[] range) {
-        return Integer.valueOf(this.ask(question));
+        int key = Integer.valueOf(this.ask(question));
+        boolean exit = false;
+
+        for (int element : range) {
+            if (element == key) {
+                exit = true;
+                break;
+            }
+        }
+
+        if (exit) {
+            return key;
+        } else {
+            throw new MenuOutException("Enter invalid count");
+        }
     }
 }
