@@ -12,9 +12,9 @@ public class MergeArrays {
         int countFirst = 0;
         int countSecond = 0;
 
-        for (int barrier = 0; barrier < first.length + second.length; ) {
+        for (int barrier = 0; barrier < first.length + second.length;) {
             mergeArr[barrier++] = first[countFirst] < second[countSecond] ? first[countFirst++] : second[countSecond++];
-            if (countFirst == first.length){
+            if (countFirst == first.length) {
                 System.arraycopy(second, countSecond, mergeArr, barrier, second.length - countSecond);
                 break;
             } else if (countSecond == second.length) {
