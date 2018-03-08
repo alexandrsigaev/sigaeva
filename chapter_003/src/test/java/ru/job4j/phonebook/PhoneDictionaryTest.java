@@ -1,8 +1,6 @@
-package ru.job4j;
+package ru.job4j.phonebook;
 
 import org.junit.Test;
-import ru.job4j.phonebook.Person;
-import ru.job4j.phonebook.PhoneDictionary;
 
 import java.util.List;
 
