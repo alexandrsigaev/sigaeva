@@ -3,6 +3,7 @@ package ru.job4j;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -45,5 +46,15 @@ public class ConvertListTest {
         list.add(9);
         list.add(0);
         assertThat(convert.toList(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}), is(list));
+    }
+
+    @Test
+    public void whenGetListArraysThenReturnListElem() {
+        ConvertList convert = new ConvertList();
+        List<int[]> list = new ArrayList<>();
+        list.add(new int[]{1, 2});
+        list.add(new int[]{1, 2, 12, 7, 28});
+        List<Integer> convertList = Arrays.asList(1, 2, 1, 2, 12, 7, 28);
+        assertThat(convert.convert(list), is(convertList));
     }
 }
