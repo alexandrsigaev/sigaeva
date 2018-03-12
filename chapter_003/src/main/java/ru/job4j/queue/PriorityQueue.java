@@ -17,20 +17,20 @@ public class PriorityQueue {
      * @param task задача
      */
     public void put(Task task) {
-        if (!tasks.isEmpty()) {
-            for (Task elem : tasks) {
-                if (elem.getPriority() > task.getPriority()) {
-                    this.tasks.add(this.tasks.indexOf(elem), task);
-                    break;
-                }
+        boolean contain = false;
+        for (Task elem : tasks) {
+            if (elem.getPriority() > task.getPriority()) {
+                this.tasks.add(this.tasks.indexOf(elem), task);
+                contain = true;
+                break;
             }
-        } else {
+        }
+        if (!contain) {
             this.tasks.add(task);
         }
     }
 
-    public Task tacke() {
+    public Task take() {
         return this.tasks.poll();
     }
-
 }
