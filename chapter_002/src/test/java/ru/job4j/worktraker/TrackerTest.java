@@ -4,6 +4,9 @@ import org.junit.Test;
 import ru.job4j.worktracker.Item;
 import ru.job4j.worktracker.Tracker;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -19,7 +22,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item item = new Item("test1", "testDescription", 123L);
         tracker.add(item);
-        assertThat(tracker.findAll()[0], is(item));
+        assertThat(tracker.findAll().get(0), is(item));
     }
 
     @Test
@@ -44,8 +47,8 @@ public class TrackerTest {
         tracker.add(notFound2);
         Item foundTwo = new Item("testFind", "testDescription", 1237L);
         tracker.add(foundTwo);
-        Item[] found = tracker.findByName("testFind");
-        assertThat(new Item[] {foundOne, foundTwo}, is(found));
+        List<Item> found = tracker.findByName("testFind");
+        assertThat(Arrays.asList(foundOne, foundTwo), is(found));
     }
 
     @Test
@@ -64,6 +67,6 @@ public class TrackerTest {
         Item test5 = new Item("test5", "testDescription", 1237L);
         tracker.add(test5);
         tracker.delete(delete.getId());
-        assertThat(new Item[] {test1, test2, test3, test4, test5}, is(tracker.findAll()));
+        assertThat(Arrays.asList(test1, test2, test3, test4, test5), is(tracker.findAll()));
     }
 }

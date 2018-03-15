@@ -1,5 +1,8 @@
 package ru.job4j.worktracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class
  *
@@ -10,8 +13,7 @@ public class MenuTracker {
 
     private Input input;
     private Tracker tracker;
-    private UserAction[] actions = new UserAction[6];
-    private int position = 0;
+    private List<UserAction> actions = new ArrayList<>();
 
     public MenuTracker(Input input, Tracker tracker) {
         this.input = input;
@@ -19,16 +21,16 @@ public class MenuTracker {
     }
 
     public void fillAction() {
-        this.actions[this.position] = new AddItem(this.position++, "Add new Item");
-        this.actions[this.position] = new ShowItems(this.position++, "Show all items");
-        this.actions[this.position] = new EditItem(this.position++, "Edit item");
-        this.actions[this.position] = new DeleteItem(this.position++, "Delete item");
-        this.actions[this.position] = new FindItemById(this.position++, "Find item by Id");
-        this.actions[this.position] = new FindByName(this.position++, "Find items by name");
+        this.actions.add(new AddItem(this.actions.size(), "Add new Item"));
+        this.actions.add(new ShowItems(this.actions.size(), "Show all items"));
+        this.actions.add(new EditItem(this.actions.size(), "Edit item"));
+        this.actions.add(new DeleteItem(this.actions.size(), "Delete item"));
+        this.actions.add(new FindItemById(this.actions.size(), "Find item by Id"));
+        this.actions.add(new FindByName(this.actions.size(), "Find items by name"));
     }
 
     public void select(int key) {
-        this.actions[key].execute(this.input, this.tracker);
+        this.actions.get(key).execute(this.input, this.tracker);
     }
 
     public void show() {
@@ -40,8 +42,8 @@ public class MenuTracker {
     }
 
     public int[] getRange() {
-        int[] range = new int[actions.length + 1];
-        for (int count = 0; count < actions.length + 1; count++) {
+        int[] range = new int[actions.size() + 1];
+        for (int count = 0; count < actions.size() + 1; count++) {
             range[count] = count;
         }
         return range;
@@ -132,8 +134,8 @@ public class MenuTracker {
         return new Item(name, description, (int) (System.currentTimeMillis() / 2560));
     }
 
-    private static void printInConsoleArrayOfItems(Item[] items) {
-        if (items.length != 0) {
+    private static void printInConsoleArrayOfItems(List<Item> items) {
+        if (!items.isEmpty()) {
             for (Item item : items) {
                 System.out.println(String.format("id: %s name: %s description: %s create: %s", item.getId(), item.getName(), item.getDesc(), item.getCreated()));
             }
@@ -153,7 +155,7 @@ class DeleteItem extends BaseAction {
     public void execute(Input input, Tracker tracker) {
         System.out.println("------Delete ticket------");
         String delete = input.ask("enter the ID of ticket");
-        if (tracker.findAll().length != 0) {
+        if (!tracker.findAll().isEmpty()) {
             tracker.delete(delete);
         } else {
             System.out.println("------tickets are absent------");

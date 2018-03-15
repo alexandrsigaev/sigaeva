@@ -23,7 +23,7 @@ public class PriorityQueueTest {
     }
 
     @Test
-    public void shouldReturnFromOneToFiveSequentially () {
+    public void shouldReturnFromOneToFiveSequentially() {
         Task t1 = new Task("1", 1);
         Task t2 = new Task("2", 2);
         Task t3 = new Task("3", 3);

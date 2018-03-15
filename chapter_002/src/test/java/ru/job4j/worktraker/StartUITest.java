@@ -8,6 +8,7 @@ import ru.job4j.worktracker.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.StringJoiner;
 
 import static org.hamcrest.core.Is.is;
@@ -38,7 +39,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("test name"));
+        assertThat(tracker.findAll().get(0).getName(), is("test name"));
     }
 
     @Test
@@ -87,7 +88,7 @@ public class StartUITest {
         tracker.add(test3);
         Input input = new StubInput(new String[] {"3", test2.getId(), "6"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll(), is(new Item[] {test1, test3}));
+        assertThat(tracker.findAll(), is(Arrays.asList(test1, test3)));
     }
 
     @Test
