@@ -5,7 +5,7 @@ package ru.job4j;
  * @author sigaevaleksandr
  * @since 12.03.2018
  */
-public class User implements Comparable<User>{
+public class User implements Comparable<User> {
     private Integer id;
     private Integer age;
     private String name;
@@ -28,8 +28,17 @@ public class User implements Comparable<User>{
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public int compareTo(User o) {
         return this.age.compareTo(o.age);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s, %s", this.name, this.age);
     }
 }
