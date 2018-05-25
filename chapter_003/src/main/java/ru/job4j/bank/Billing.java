@@ -90,12 +90,12 @@ public class Billing {
         Account result = null;
 
         for (Account account : accounts) {
-            if (account.getRequsites() == requisite) {
+            if (account.getRequsites().equals(requisite)) {
                 result = account;
                 break;
             }
         }
-        if (result.equals(null)) {
+        if (result == null) {
             throw new NotFoundAccountException("Account not found");
         }
         return result;
