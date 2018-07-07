@@ -30,29 +30,15 @@ public class Converter {
                         }
                     }
                 }
-
                 return result;
             }
 
             @Override
             public Integer next() {
-                Integer result = null;
-
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-
-                if (!currentItr.hasNext()) {
-                    while (its.hasNext()) {
-                        currentItr = its.next();
-                        if (currentItr.hasNext()) {
-                            result = currentItr.next();
-                        }
-                    }
-                } else {
-                    result = currentItr.next();
-                }
-                return result;
+                return currentItr.next();
             }
         };
     }
