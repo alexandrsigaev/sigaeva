@@ -21,12 +21,12 @@ public class MatrixArraysTest {
     private Iterator<Integer> it;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         it = new MultiArraysIterator(new int[][]{{1, 2, 3}, {4, 5, 6}});
     }
 
     @Test
-    public void hasNextNextSequentialInvocation () {
+    public void hasNextNextSequentialInvocation() {
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
         assertThat(it.hasNext(), is(true));
@@ -43,7 +43,7 @@ public class MatrixArraysTest {
     }
 
     @Test
-    public void testsThatNextMethodDoesntDependsOnPriorHasNextInvocation () {
+    public void testsThatNextMethodDoesntDependsOnPriorHasNextInvocation() {
         assertThat(it.next(), is(1));
         assertThat(it.next(), is(2));
         assertThat(it.next(), is(3));
@@ -53,7 +53,7 @@ public class MatrixArraysTest {
     }
 
     @Test
-    public void sequentialHasNextInvocationDoesntAffectRetrievalOrder () {
+    public void sequentialHasNextInvocationDoesntAffectRetrievalOrder() {
         assertThat(it.hasNext(), is(true));
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(1));
@@ -65,7 +65,7 @@ public class MatrixArraysTest {
     }
 
     @Test(expected = NoSuchElementException.class)
-    public void shoulThrowNoSuchElementException () {
+    public void shoulThrowNoSuchElementException() {
         it = new MultiArraysIterator(new int[][]{});
         it.next();
     }

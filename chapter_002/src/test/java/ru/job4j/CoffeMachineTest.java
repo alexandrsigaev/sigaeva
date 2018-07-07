@@ -16,7 +16,7 @@ public class CoffeMachineTest {
     @Test
     public void whenGetValueAndBuyCoffeForePriceThenGetChange() {
         CoffeeMachine machine = new CoffeeMachine();
-        assertThat(new int[] {10 , 10, 5, 2, 1}, is(machine.changes(50, 22)));
+        assertThat(new int[] {10, 10, 5, 2, 1}, is(machine.changes(50, 22)));
     }
 
 }

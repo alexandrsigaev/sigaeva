@@ -30,8 +30,12 @@ public class User implements Comparable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
         User user = (User) o;
         return Objects.equals(getName(), user.getName()) && Objects.equals(getPassport(), user.getPassport());
     }

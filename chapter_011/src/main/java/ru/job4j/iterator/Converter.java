@@ -43,9 +43,9 @@ public class Converter {
                 }
 
                 if (!currentItr.hasNext()) {
-                    while (its.hasNext()){
+                    while (its.hasNext()) {
                         currentItr = its.next();
-                        if (currentItr.hasNext()){
+                        if (currentItr.hasNext()) {
                             result = currentItr.next();
                         }
                     }

@@ -31,9 +31,9 @@ public class MultiArraysIterator implements Iterator {
     @Override
     public Object next() {
         int result;
-        if (countIndex == size){
+        if (countIndex == size) {
             throw new NoSuchElementException();
-        }else if (countColumn == source[countLine].length - 1){
+        } else if (countColumn == source[countLine].length - 1) {
             result = source[countLine++][countColumn];
             countColumn = 0;
         } else {

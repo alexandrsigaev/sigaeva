@@ -23,9 +23,9 @@ public class Parser {
     public boolean valid() {
         this.stack.clear();
         for (Character chr : strForParse.toCharArray()) {
-            if(brackets.getBracketMap().containsKey(chr)) {
+            if (brackets.getBracketMap().containsKey(chr)) {
                 stack.push(chr);
-            }else if (!stack.empty() && chr.equals(brackets.getBracketMap().get(stack.peek()))){
+            } else if (!stack.empty() && chr.equals(brackets.getBracketMap().get(stack.peek()))) {
                 stack.pop();
             }
         }
@@ -38,7 +38,7 @@ public class Parser {
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < strForParse.length(); i++) {
-            if (brackets.getBracketMap().containsKey(strForParse.charAt(i))){
+            if (brackets.getBracketMap().containsKey(strForParse.charAt(i))) {
                 stack.push(strForParse.charAt(i));
                 tmp.push(i);
             } else if (!stack.empty() && strForParse.charAt(i) == brackets.getBracketMap().get(stack.peek()).charValue()) {

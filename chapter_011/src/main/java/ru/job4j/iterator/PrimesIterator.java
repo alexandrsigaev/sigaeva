@@ -26,8 +26,8 @@ public class PrimesIterator implements Iterator {
 
     @Override
     public Object next() {
-        int [] resilt = findPrime();
-        if (resilt[1] == -1){
+        int[] resilt = findPrime();
+        if (resilt[1] == -1) {
             throw new NoSuchElementException();
         }
         count = resilt[0] + 1;
@@ -35,11 +35,11 @@ public class PrimesIterator implements Iterator {
     }
 
 
-    private boolean isPrime(int num){
+    private boolean isPrime(int num) {
         boolean result = true;
         if (num < 2) {
             result = false;
-        }else {
+        } else {
             for (int i = 2; i <= Math.sqrt(num); i++) {
                 if (num % i == 0) {
                     result = false;
