@@ -60,7 +60,7 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
         int result = -1;
         int count = 0;
         for (T elem : sourse) {
-            if (id.equals(elem.getId())){
+            if (id.equals(elem.getId())) {
                 result = count;
                 break;
             }
