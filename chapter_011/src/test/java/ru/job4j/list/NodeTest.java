@@ -28,4 +28,20 @@ public class NodeTest {
         assertThat(Node.hasCycle(first), is(true));
     }
 
+    @Test
+    public void whenGetNodeThenFindCycleInMiddle() {
+        Node first = new Node(1);
+        Node two = new Node(2);
+        Node third = new Node(3);
+        Node four = new Node(4);
+        Node five = new Node(5);
+
+        first.next = two;
+        two.next = third;
+        third.next = two;
+        four.next = five;
+
+        assertThat(Node.hasCycle(first), is(true));
+    }
+
 }
