@@ -15,7 +15,7 @@ import java.util.Map;
 public class UserTest {
 
     @Test
-    public void withoutOverrideEqualsAndHashcode(){
+    public void withoutOverrideEquals(){
         User user1 = new User("Oleg", 5, new GregorianCalendar(1980, 5, 12));
         User user2 = new User("Oleg", 5, new GregorianCalendar(1980, 5, 12));
         Map<User, Object> map = new HashMap<>();

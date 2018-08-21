@@ -20,4 +20,11 @@ public class User {
         this.birthday = birthday;
     }
 
+    @Override
+    public int hashCode() {
+        int result = this.name != null ? this.name.hashCode() : 0;
+        result = 31 * result + children;
+        result = 31 * result + this.birthday.hashCode();
+        return result;
+    }
 }
