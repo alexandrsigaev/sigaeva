@@ -36,6 +36,19 @@ public class ArrayList<E> implements Iterable<E> {
         return (E) this.source[index];
     }
 
+    public boolean contains(E value) {
+        boolean result = false;
+
+        for (int i = 0; i < count; i++) {
+            if (this.source[i].equals(value)) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
     private void createLargerArr() {
         Object[] tmp = new Object[source.length * 2];
         System.arraycopy(this.source, 0, tmp, 0, this.source.length);
@@ -60,7 +73,7 @@ public class ArrayList<E> implements Iterable<E> {
                 if (!this.hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (E) source[iterCount];
+                return (E) source[iterCount++];
             }
         };
     }
