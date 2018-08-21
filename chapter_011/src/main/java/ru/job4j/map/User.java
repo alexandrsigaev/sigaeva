@@ -30,4 +30,12 @@ public class User {
                 Objects.equals(name, user.name) &&
                 Objects.equals(birthday, user.birthday);
     }
+
+    @Override
+    public int hashCode() {
+        int result = this.name != null ? this.name.hashCode() : 0;
+        result = 31 * result + children;
+        result = 31 * result + this.birthday.hashCode();
+        return result;
+    }
 }
