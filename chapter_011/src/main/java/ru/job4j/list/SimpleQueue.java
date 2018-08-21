@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class SimpleQueue<T> {
 
-    private List<T> queue = new LinkedList<>();
+    private final List<T> queue = new LinkedList<>();
 
     public T poll() {
         T result = queue.get(0);

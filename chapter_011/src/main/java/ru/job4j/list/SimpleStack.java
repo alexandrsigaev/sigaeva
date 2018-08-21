@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class SimpleStack<T> {
 
-    private List<T> stack = new LinkedList<>();
+    private final List<T> stack = new LinkedList<>();
 
     public void push(T value) {
         stack.add(value);
