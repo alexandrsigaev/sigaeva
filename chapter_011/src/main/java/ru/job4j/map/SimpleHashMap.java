@@ -19,14 +19,14 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
     private int hashTableSize;
     private float loadFactor = 0;
     private int size = 0;
-    private int modCount =0;
+    private int modCount = 0;
 
     public SimpleHashMap() {
         this.hashTableSize = DEFAULT_HASH_TABLE_SIZE;
         this.hashTable = new Node[this.hashTableSize];
     }
 
-    public boolean insert(K key, V value){
+    public boolean insert(K key, V value) {
         boolean result = false;
         int hash = this.hash(key);
         if (this.loadFactor > DEFAULT_LOAD_FACTORY) {
@@ -41,13 +41,13 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
         return result;
     }
 
-    public V get(K key){
+    public V get(K key) {
         int hash = this.hash(key);
         Node<K, V> tmp = this.hashTable[hash];
         return tmp != null && tmp.key.equals(key) ? tmp.value : null;
     }
 
-    public boolean delete(K key){
+    public boolean delete(K key) {
         boolean result = false;
         int hash = this.hash(key);
         if (this.hashTable[hash] != null && this.hashTable[hash].key.equals(key)) {
@@ -103,7 +103,7 @@ public class SimpleHashMap<K, V> implements Iterable<K> {
                 if (!this.hasNext()) {
                     throw new NoSuchElementException();
                 }
-                while (this.iterCount < hashTableSize && hashTable[iterCount] == null){
+                while (this.iterCount < hashTableSize && hashTable[iterCount] == null) {
                     iterCount++;
                 }
                 result = hashTable[iterCount++].key;
