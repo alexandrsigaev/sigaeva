@@ -11,25 +11,34 @@ import javafx.scene.shape.Rectangle;
 public class RectangleMove implements Runnable {
 
     private final Rectangle rect;
+    private boolean goOut = false;
+    private final int sizeX;
+    private final int sizeY;
 
-    public RectangleMove(Rectangle rect) {
+    public RectangleMove(Rectangle rect, int sizeX, int sizeY) {
         this.rect = rect;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+    }
+
+    public void isInterrupt(boolean isExit) {
+        this.goOut = isExit;
     }
 
     @Override
     public void run() {
-        int x = 0;
-        int y = 100;
-        int delX = 5;
-        int delY = -5;
-        while (true) {
-            if (x > 300 || x < 0) {
+        int x = (int) rect.getX();
+        int y = (int) rect.getY();
+        int delX = 1;
+        int delY = -1;
+        while (!goOut) {
+            if (x > sizeX || x < 0) {
                 delX =  - delX;
             }
             this.rect.setX(this.rect.getX() + delX);
             x = x + delX;
 
-            if (y > 300 || y < 0) {
+            if (y > sizeY || y < 0) {
                 delY =  - delY;
             }
             this.rect.setY(this.rect.getY() + delY);
