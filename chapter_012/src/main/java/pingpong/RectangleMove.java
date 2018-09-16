@@ -11,7 +11,6 @@ import javafx.scene.shape.Rectangle;
 public class RectangleMove implements Runnable {
 
     private final Rectangle rect;
-    private boolean goOut = false;
     private final int sizeX;
     private final int sizeY;
 
@@ -21,9 +20,6 @@ public class RectangleMove implements Runnable {
         this.sizeY = sizeY;
     }
 
-    public void isInterrupt(boolean isExit) {
-        this.goOut = isExit;
-    }
 
     @Override
     public void run() {
@@ -31,7 +27,7 @@ public class RectangleMove implements Runnable {
         int y = (int) rect.getY();
         int delX = 1;
         int delY = -1;
-        while (!goOut) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (x > sizeX || x < 0) {
                 delX =  - delX;
             }
@@ -48,6 +44,7 @@ public class RectangleMove implements Runnable {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }
