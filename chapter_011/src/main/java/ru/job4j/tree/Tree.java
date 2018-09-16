@@ -12,7 +12,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
     private int size = 0;
     private int modCount = 0;
-    private boolean isBinary = true;
 
     public Tree(E value) {
         this.root = new Node<>(value);
@@ -50,11 +49,19 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     }
 
     public boolean isBinary() {
-        Iterator<E> itr = this.iterator();
-        itr.hasNext();
-        return this.isBinary;
+        return this.findIsBinary(this.root);
     }
 
+    private boolean findIsBinary(Node<E> root) {
+        boolean isBinary = true;
+        for (int i = 0; i < root.leaves().size() && isBinary; i++) {
+            findIsBinary(root.leaves().get(i));
+        }
+        if (root.leaves().size() > 2) {
+            isBinary = false;
+        }
+        return isBinary;
+    }
     
 
     @Override
@@ -84,9 +91,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
             }
 
             private void fillListOfTheNodes(Node<E> first) {
-                if (first.leaves().size() > 2) {
-                    isBinary = false;
-                }
                 for (int i = 0; i < first.leaves().size(); i++) {
                     this.fillListOfTheNodes(first.leaves().get(i));
                 }
