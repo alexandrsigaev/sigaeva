@@ -10,7 +10,7 @@ import java.util.NoSuchElementException;
  * @author sigaevaleksandr
  * @since 14.07.2018
  */
-public class ArrayList<E> implements Iterable<E> {
+public class ArrayList<E> extends Container<E> {
 
     private Object[] source;
     private int count = 0;
