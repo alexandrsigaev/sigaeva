@@ -25,7 +25,7 @@ public class UserStorage {
         return users;
     }
 
-    public boolean add (User user) {
+    public boolean add(User user) {
         boolean result = false;
         synchronized (this) {
             if (!this.users.containsKey(user.getId())) {

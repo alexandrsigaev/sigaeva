@@ -10,7 +10,7 @@ public class Visibility {
 
     private static int count = 0;
 
-    public static class TestRun implements Runnable{
+    public static class TestRun implements Runnable {
 
         @Override
         public void run() {

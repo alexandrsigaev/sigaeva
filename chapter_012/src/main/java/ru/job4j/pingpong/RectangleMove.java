@@ -29,13 +29,13 @@ public class RectangleMove implements Runnable {
         int delY = -1;
         while (!Thread.currentThread().isInterrupted()) {
             if (x > sizeX || x < 0) {
-                delX =  - delX;
+                delX =  -delX;
             }
             this.rect.setX(this.rect.getX() + delX);
             x = x + delX;
 
             if (y > sizeY || y < 0) {
-                delY =  - delY;
+                delY =  -delY;
             }
             this.rect.setY(this.rect.getY() + delY);
             y = y + delY;

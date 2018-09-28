@@ -13,7 +13,7 @@ public class Ordering {
     private static int t1, t2;
 
     public static void main(String[] args) throws InterruptedException {
-        Thread thread1= new Thread(new Runnable() {
+        Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
                 t1 = b;
@@ -21,7 +21,7 @@ public class Ordering {
             }
         });
 
-        Thread thread2= new Thread(new Runnable() {
+        Thread thread2 = new Thread(new Runnable() {
             @Override
             public void run() {
                 t2 = a;
