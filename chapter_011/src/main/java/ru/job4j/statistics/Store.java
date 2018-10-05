@@ -30,10 +30,10 @@ public class Store {
 
     private void statisticsAddsAndChangeUsers(Map<Integer, User> prev, Map<Integer, User> curr, Info info) {
         for (Map.Entry<Integer, User> entry : curr.entrySet()) {
-            if (prev.containsKey(entry.getKey()) && !prev.get(entry.getKey()).equals(entry.getValue())) {
-                info.info[info.indexCountChangeUsers]++;
-            } else if (!prev.containsKey(entry.getKey())) {
-                info.info[info.indexCountAddUsers]++;
+            if (!prev.containsKey(entry.getKey())) {
+                info.info[Info.INDEX_COUNT_ADD_USERS]++;
+            }else if (!prev.get(entry.getKey()).equals(entry.getValue())) {
+                info.info[Info.INDEX_COUNT_CHANGE_USERS]++;
             }
         }
     }
@@ -41,29 +41,29 @@ public class Store {
     private void statisticsDelUsers(Map<Integer, User> prev, Map<Integer, User> curr, Info info) {
         for (Map.Entry<Integer, User> entry : prev.entrySet()) {
             if (!curr.containsKey(entry.getKey())) {
-                info.info[info.indexCountDelUsers]++;
+                info.info[Info.INDEX_COUNT_DEL_USERS]++;
             }
         }
     }
 
     static class Info {
-        int[] info = new int[3];
-        int indexCountAddUsers = 0;
-        int indexCountDelUsers = 1;
-        int indexCountChangeUsers = 2;
+        private int[] info = new int[3];
+        private static final int INDEX_COUNT_ADD_USERS = 0;
+        private static final int INDEX_COUNT_DEL_USERS = 1;
+        private static final int INDEX_COUNT_CHANGE_USERS = 2;
 
         @Override
         public String toString() {
             return String.format("Statistics:  Add Users %d, Del Users %d, Change Users %d",
-                    this.info[indexCountAddUsers], this.info[indexCountDelUsers], this.info[indexCountChangeUsers]);
+                    this.info[INDEX_COUNT_ADD_USERS], this.info[INDEX_COUNT_DEL_USERS], this.info[INDEX_COUNT_CHANGE_USERS]);
         }
     }
 
     static class User {
-        int id;
-        String name;
+        private int id;
+        private String name;
 
-        public User(int id, String name) {
+        User(int id, String name) {
             this.id = id;
             this.name = name;
         }

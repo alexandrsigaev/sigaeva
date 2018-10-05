@@ -30,14 +30,14 @@ public class StoreTest {
     @Before
     public void setUp() {
         this.store = new Store();
-        this.previous = new ArrayList<>();
-        this.current = new ArrayList<>();
         this.user1 = new Store.User(12, "Alex");
         this.user2 = new Store.User(82, "Misha");
         this.user3 = new Store.User(48, "Olga");
         this.user4 = new Store.User(32, "Ivan");
         this.user5 = new Store.User(98, "Jon");
         this.user6 = new Store.User(134, "Gery");
+        this.previous = new ArrayList<>();
+        this.current = new ArrayList<>();
         this.previous.add(user1);
         this.previous.add(user2);
         this.previous.add(user3);
@@ -57,9 +57,36 @@ public class StoreTest {
         this.current.remove(user4);
         Store.Info info = this.store.diff(this.previous, this.current);
         assertThat(info.toString(), is("Statistics:  Add Users 2, Del Users 1, Change Users 3"));
-
-
+        this.current.clear();
     }
 
+    @Test
+    public void whenAdd3UsersOnly() {
+        this.current.addAll(previous);
+        this.current.add(new Store.User(64, "Anton"));
+        this.current.add(new Store.User(485, "Anastasia"));
+        this.current.add(new Store.User(654654, "dslkgvkdjggj"));
+        Store.Info info = this.store.diff(this.previous, this.current);
+        assertThat(info.toString(), is("Statistics:  Add Users 3, Del Users 0, Change Users 0"));
+        this.current.clear();
+    }
 
+    @Test
+    public void whenChange4UsersOnly() {
+        this.current.addAll(previous);
+        this.current.set(this.current.indexOf(user1) ,new Store.User(12, "Anton"));
+        this.current.set(this.current.indexOf(user2) ,new Store.User(82, "Anastasia"));
+        this.current.set(this.current.indexOf(user3) ,new Store.User(48, "dslkgvkdjggj"));
+
+        Store.Info info = this.store.diff(this.previous, this.current);
+        assertThat(info.toString(), is("Statistics:  Add Users 0, Del Users 0, Change Users 3"));
+        this.current.clear();
+    }
+
+    @Test
+    public void whenDellAllUsers() {
+        Store.Info info = this.store.diff(this.previous, this.current);
+        assertThat(info.toString(), is("Statistics:  Add Users 0, Del Users 6, Change Users 0"));
+
+    }
 }
