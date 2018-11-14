@@ -32,7 +32,7 @@ public class Store {
         for (Map.Entry<Integer, User> entry : curr.entrySet()) {
             if (!prev.containsKey(entry.getKey())) {
                 info.info[Info.INDEX_COUNT_ADD_USERS]++;
-            }else if (!prev.get(entry.getKey()).equals(entry.getValue())) {
+            } else if (!prev.get(entry.getKey()).equals(entry.getValue())) {
                 info.info[Info.INDEX_COUNT_CHANGE_USERS]++;
             }
         }
