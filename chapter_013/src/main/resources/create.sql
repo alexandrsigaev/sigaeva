@@ -1,72 +1,75 @@
-CREATE DATABASE item_db
+CREATE DATABASE item_db;
+
 CREATE TABLE role
 (
-	id serial primary key ,
-	name varchar(2000)
-)
+	id serial PRIMARY KEY,
+	name VARCHAR (2000)
+);
 CREATE TABLE rules
 (
-	id serial primary key,
-	name varchar(2000)
-)
+	id serial PRIMARY KEY,
+	name VARCHAR (2000)
+);
 CREATE TABLE role_rules
 (
-	id serial primary key,
-	role_id int references role(id),
-	rules_id int references rules(id)
-)
+	id serial PRIMARY KEY,
+	role_id INT REFERENCES role(id),
+	rules_id INT REFERENCES rules(id)
+);
 CREATE TABLE user
 (
 	id serial primary key,
-	login varchar(2000),
-	password varchar(2000),
-	role_id int references role(id)
-)
+	login VARCHAR (2000),
+	password VARCHAR (2000),
+	role_id IS NOT NULL INT REFERENCES role(id)
+);
 CREATE TABLE category
 (
-	id serial primary key,
-	name varchar(2000)
-)
+	id serial PRIMARY KEY,
+	name VARCHAR (2000)
+);
 CREATE TABLE state
 (
-	id serial primary key,
-	name varchar(2000)
-)
+	id serial PRIMARY KEY,
+	name VARCHAR(2000)
+);
 CREATE TABLE item
 (
-	id serial primary key,
-	name varchar(2000),
-	user_id int references user(id),
-	category_id int references category(id),
-	state_id int references state(id)
-)
+	id serial PRIMARY KEY,
+	name VARCHAR(2000),
+	description VARCHAR (2000),
+	created TIMESTAMP,
+	user_id int REFERENCES user(id),
+	category_id INT REFERENCES category(id),
+	state_id INT REFERENCES state(id)
+);
 CREATE TABLE comments
 (
-	id serial primary key,
-	data text,
-	item_id int references item(id)
-)
+	id serial PRIMARY KEY,
+	data MESSAGE_TEXT,
+	item_id IS NOT NULL INT REFERENCES item(id)
+);
 CREATE TABLE attachs
 (
-	id serial primary key,
-	path varchar(2000),
-	item_id int references item(id)
-)
+	id serial PRIMARY KEY,
+	path VARCHAR(2000),
+	item_id INT REFERENCES item(id)
+);
 
 INSERT INTO role 
 VALUES 
-('autor')
+('autor');
 INSERT INTO rules 
 VALUES 
 ('write'),
-('reed')
+('reed');
 INSERT INTO user 
 VALUES 
-('root', 'root', '1'),
-('user124', 'qwerty', '2')
+('admin', 'admin', '1'),
+('aleksandr', 'qwerty', '2');
 INSERT INTO category 
 VALUES 
-('')
+('');
 INSERT INTO state
 VALUES 
 ('open'),
