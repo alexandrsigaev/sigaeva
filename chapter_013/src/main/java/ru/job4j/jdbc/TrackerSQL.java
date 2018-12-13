@@ -50,7 +50,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     }
 
     private void createDB() {
-        try (Statement statement = this.connection.createStatement()){
+        try (Statement statement = this.connection.createStatement()) {
             statement.executeUpdate(this.trackerScript.getProperty("CREATE_TABLE_ITEM"));
             statement.executeUpdate(this.trackerScript.getProperty("CREATE_TABLE_COMMENTS"));
         } catch (SQLException e) {
@@ -91,7 +91,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     public void delete(String id) {
         try (PreparedStatement statementComment = this.connection.prepareStatement(this.trackerScript.getProperty("DELETE_ALL_COMMENTS_FOR_ITEM"))) {
             statementComment.setInt(1, Integer.parseInt(id));
-            try (PreparedStatement statementItem = this.connection.prepareStatement(this.trackerScript.getProperty("DELETE_ITEM"))){
+            try (PreparedStatement statementItem = this.connection.prepareStatement(this.trackerScript.getProperty("DELETE_ITEM"))) {
                 statementItem.setInt(1, Integer.parseInt(id));
             }
         } catch (SQLException e) {
@@ -115,7 +115,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
 
     @Override
     public List<Item> findByName(String key) {
-        try (PreparedStatement preparedStatement = this.connection.prepareStatement(this.trackerScript.getProperty("FIND_ITEM_BY_NAME"))){
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(this.trackerScript.getProperty("FIND_ITEM_BY_NAME"))) {
             preparedStatement.setString(1, "%" + key + "%");
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 fillListItems(resultSet);
@@ -129,7 +129,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
     @Override
     public Item findById(String id) {
         Item result = null;
-        try (PreparedStatement preparedStatement = this.connection.prepareStatement(this.trackerScript.getProperty("FIND_ITEM_BY_ID"))){
+        try (PreparedStatement preparedStatement = this.connection.prepareStatement(this.trackerScript.getProperty("FIND_ITEM_BY_ID"))) {
             preparedStatement.setInt(1, Integer.parseInt(id));
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 fillListItems(resultSet);
@@ -143,7 +143,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         return result;
     }
 
-    private void fillListItems (ResultSet resultSet) throws SQLException {
+    private void fillListItems(ResultSet resultSet) throws SQLException {
         items.clear();
         while (resultSet.next()) {
             Integer id = resultSet.getInt("id");

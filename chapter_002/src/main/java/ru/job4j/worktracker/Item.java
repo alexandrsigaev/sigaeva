@@ -21,7 +21,7 @@ public class Item {
         this.created = created;
     }
 
-    public Item(String id,String name, String desc, long created) {
+    public Item(String id, String name, String desc, long created) {
         this.id = id;
         this.name = name;
         this.desc = desc;
@@ -35,7 +35,9 @@ public class Item {
         this.comments = comments;
     }
 
-    public String getId() { return id; }
+    public String getId() {
+        return id;
+    }
 
     public String getName() {
         return name;
