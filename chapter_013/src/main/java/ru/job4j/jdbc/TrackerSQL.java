@@ -15,9 +15,9 @@ import java.util.Properties;
  * @author sigaevaleksandr
  * @since 09.12.2018
  */
-public class TrackerSQL implements ITracker, Cloneable {
+public class TrackerSQL implements ITracker, AutoCloseable {
 
-    private Connection connection;
+    private Connection connection = null;
     private Properties config = new Properties();
     private Properties trackerScript = new Properties();
     private final List<Item> items = new ArrayList<>();
@@ -152,6 +152,13 @@ public class TrackerSQL implements ITracker, Cloneable {
             Long created = resultSet.getTimestamp("created").getTime();
             Item item = new Item(id.toString(), name, description, created);
             items.add(item);
+        }
+    }
+
+    @Override
+    public void close() throws Exception {
+        if (connection != null) {
+            connection.close();
         }
     }
 }
