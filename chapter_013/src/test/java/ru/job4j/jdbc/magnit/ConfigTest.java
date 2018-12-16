@@ -21,7 +21,6 @@ public class ConfigTest {
 
     @Before
     public void setUp() {
-        config.init();
         config.generate(5);
     }
 
@@ -29,7 +28,7 @@ public class ConfigTest {
     public void whenSelectDataThenGetListFields() {
         List<XmlUsage.Field> fields = Arrays.asList(new XmlUsage.Field(1), new XmlUsage.Field(2), new XmlUsage.Field(3),
                 new XmlUsage.Field(4), new XmlUsage.Field(5));
-        assertThat(fields, is(config.selecrData()));
+        assertThat(fields, is(config.selectData()));
     }
 
 }

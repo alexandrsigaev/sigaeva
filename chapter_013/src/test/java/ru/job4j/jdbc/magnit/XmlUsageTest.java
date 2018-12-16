@@ -26,7 +26,6 @@ public class XmlUsageTest {
 
     @Before
     public void setUp() {
-        config.init();
         config.generate(5);
         fields = Arrays.asList(new XmlUsage.Field(1), new XmlUsage.Field(2), new XmlUsage.Field(3),
                 new XmlUsage.Field(4), new XmlUsage.Field(5));
@@ -34,7 +33,7 @@ public class XmlUsageTest {
 
     @Test
     public void whenUseXmlParser() throws IOException {
-        usage.createXml(config.selecrData(), "fieldsTest.xml");
+        usage.createXml(config.selectData(), "fieldsTest.xml");
         assertThat(Files.readAllLines(Paths.get("fieldsTest.xml")), is(Files.readAllLines(Paths.get("fields.xml"))));
     }
 

@@ -24,9 +24,8 @@ public class SAXExmpleParserTest {
 
     @Before
     public void setUp() {
-        config.init();
         config.generate(5);
-        usage.createXml(config.selecrData(), "fieldsSours.xml");
+        usage.createXml(config.selectData(), "fieldsSours.xml");
         convertXSQT.convert(sours, dest, new File("scheme.xml"));
     }
 

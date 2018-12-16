@@ -17,27 +17,15 @@ import java.util.Properties;
  */
 public class TrackerSQL implements ITracker, AutoCloseable {
 
-    private Connection connection = null;
+    private final Connection connection;
     private Properties config = new Properties();
     private Properties trackerScript = new Properties();
     private final List<Item> items = new ArrayList<>();
 
-
-    public boolean init() {
-        try (InputStream in = TrackerSQL.class.getClassLoader().getResourceAsStream("app.properties")) {
-            this.config.load(in);
-            Class.forName(config.getProperty("driver-class-name"));
-            this.connection = DriverManager.getConnection(
-                    config.getProperty("url"),
-                    config.getProperty("username"),
-                    config.getProperty("password")
-            );
-            this.initSql();
-            this.createDB();
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-        return this.connection != null;
+    public TrackerSQL(Connection connection) {
+        this.connection = connection;
+        initSql();
+        createDB();
     }
 
     private boolean initSql() {
@@ -66,7 +54,11 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             statement.setString(2, item.getDesc());
             statement.setTimestamp(3, new Timestamp(item.getCreated()));
             statement.executeUpdate();
-
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    item.setId(generatedKeys.getString(1));
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -97,7 +89,6 @@ public class TrackerSQL implements ITracker, AutoCloseable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     @Override

@@ -27,9 +27,8 @@ public class ConvertXSQTTest {
 
     @Before
     public void setUp() {
-        config.init();
         config.generate(5);
-        usage.createXml(config.selecrData(), "fieldsSours.xml");
+        usage.createXml(config.selectData(), "fieldsSours.xml");
     }
 
     @Test

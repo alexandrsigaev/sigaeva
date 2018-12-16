@@ -15,30 +15,31 @@ import java.util.Properties;
  * @since 09.12.2018
  */
 public class Config implements AutoCloseable {
-    private final Properties values = new Properties();
-    private Connection connection = null;
+
     private final static Logger LOGGER = Logger.getLogger(Config.class);
 
-    public void init() {
+    public static Connection getConnection() {
+        Properties properties = new Properties();
+        Connection connection;
         try (InputStream in = Config.class.getClassLoader().getResourceAsStream("app_magnit.properties")) {
-            values.load(in);
-            Class.forName(this.values.getProperty("driver-class-name"));
-            this.connection = DriverManager.getConnection(this.get("url"));
-            this.createBD();
+            properties.load(in);
+            Class.forName(properties.getProperty("driver-class-name"));
+            connection = DriverManager.getConnection(properties.getProperty("url"));
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+        return connection;
     }
 
-    public String get(String key) {
-        return this.values.getProperty(key);
+    public Config() {
+        this.createBD();
     }
 
     private void createBD() {
         String dropTable = "DROP TABLE IF EXISTS entry";
         String createTable = "CREATE TABLE IF NOT EXISTS entry (field INTEGER);";
 
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = this.getConnection().createStatement()) {
             statement.executeUpdate(dropTable);
             statement.executeUpdate(createTable);
         } catch (SQLException e) {
@@ -47,27 +48,30 @@ public class Config implements AutoCloseable {
     }
 
     public void generate(int n) {
-        try (PreparedStatement prst = connection.prepareStatement("INSERT INTO entry VALUES (?)")) {
-            connection.setAutoCommit(false);
-            for (int i = 1; i <= n; i++) {
-                prst.setInt(1, i);
-                prst.addBatch();
+        try {
+            this.getConnection().setAutoCommit(false);
+            try (PreparedStatement prst = this.getConnection().prepareStatement("INSERT INTO entry VALUES (?)")) {
+                for (int i = 1; i <= n; i++) {
+                    prst.setInt(1, i);
+                    prst.addBatch();
+                }
+                prst.executeBatch();
+                this.getConnection().commit();
             }
-            prst.executeBatch();
-            connection.commit();
         } catch (SQLException e) {
             try {
-                connection.rollback();
+                this.getConnection().rollback();
             } catch (SQLException e1) {
                 LOGGER.error(e1.getMessage(), e1);
             }
             LOGGER.error(e.getMessage(), e);
         }
+
     }
 
-    public List<XmlUsage.Field> selecrData() {
+    public List<XmlUsage.Field> selectData() {
         List<XmlUsage.Field> result = new ArrayList<>();
-        try (Statement statement = connection.createStatement()) {
+        try (Statement statement = this.getConnection().createStatement()) {
             ResultSet resultSet = statement.executeQuery("SELECT * FROM entry");
             while (resultSet.next()) {
                 result.add(new XmlUsage.Field(resultSet.getInt("field")));
@@ -81,8 +85,8 @@ public class Config implements AutoCloseable {
     @Override
     public void close() throws Exception {
 
-        if (connection != null) {
-            connection.close();
+        if (this.getConnection() != null) {
+            this.getConnection().close();
         }
 
     }
