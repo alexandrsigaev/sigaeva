@@ -32,8 +32,12 @@ public class Department {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Department)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Department)) {
+            return false;
+        }
         Department that = (Department) o;
         return Objects.equals(getDepartments(), that.getDepartments());
     }
@@ -45,8 +49,6 @@ public class Department {
 
     @Override
     public String toString() {
-        return "Department{" +
-                "departments=" + departments +
-                '}';
+        return "Department{" + "departments=" + departments + '}';
     }
 }

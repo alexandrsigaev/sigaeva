@@ -28,11 +28,14 @@ public class Cell {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cell)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Cell)) {
+            return false;
+        }
         Cell cell = (Cell) o;
-        return getBoardX() == cell.getBoardX() &&
-                getBoardY() == cell.getBoardY();
+        return getBoardX() == cell.getBoardX() && getBoardY() == cell.getBoardY();
     }
 
     @Override
@@ -43,9 +46,6 @@ public class Cell {
 
     @Override
     public String toString() {
-        return "Cell{" +
-                "boardX=" + boardX +
-                ", boardY=" + boardY +
-                '}';
+        return "Cell{" + "boardX=" + boardX + ", boardY=" + boardY + '}';
     }
 }
