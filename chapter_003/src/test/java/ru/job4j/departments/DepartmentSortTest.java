@@ -20,7 +20,8 @@ import static org.junit.Assert.assertThat;
 public class DepartmentSortTest {
 
     private List<Department> departmentsSrc = new ArrayList<>();
-    private List<Department> departmentsDist = new ArrayList<>();
+    private List<Department> departmentsSortAscending = new ArrayList<>();
+    private List<Department> departmentsSortDescending = new ArrayList<>();
 
 
     @Before
@@ -33,24 +34,44 @@ public class DepartmentSortTest {
         departmentsSrc.add(new Department("K3\\SK1\\SSK1"));
         departmentsSrc.add(new Department("K2\\SK1\\SSK1"));
 
-        departmentsDist.add(new Department("K1"));
-        departmentsDist.add(new Department("K1\\SK1"));
-        departmentsDist.add(new Department("K1\\SK1\\SSK1"));
-        departmentsDist.add(new Department("K1\\SK1\\SSK2"));
-        departmentsDist.add(new Department("K2"));
-        departmentsDist.add(new Department("K2\\SK1"));
-        departmentsDist.add(new Department("K2\\SK1\\SSK1"));
-        departmentsDist.add(new Department("K3"));
-        departmentsDist.add(new Department("K3\\SK1"));
-        departmentsDist.add(new Department("K3\\SK1\\SSK1"));
-        departmentsDist.add(new Department("K4"));
-        departmentsDist.add(new Department("K4\\SK1\\"));
+        departmentsSortAscending.add(new Department("K1"));
+        departmentsSortAscending.add(new Department("K1\\SK1"));
+        departmentsSortAscending.add(new Department("K1\\SK1\\SSK1"));
+        departmentsSortAscending.add(new Department("K1\\SK1\\SSK2"));
+        departmentsSortAscending.add(new Department("K2"));
+        departmentsSortAscending.add(new Department("K2\\SK1"));
+        departmentsSortAscending.add(new Department("K2\\SK1\\SSK1"));
+        departmentsSortAscending.add(new Department("K3"));
+        departmentsSortAscending.add(new Department("K3\\SK1"));
+        departmentsSortAscending.add(new Department("K3\\SK1\\SSK1"));
+        departmentsSortAscending.add(new Department("K4"));
+        departmentsSortAscending.add(new Department("K4\\SK1"));
+
+
+        departmentsSortDescending.add(new Department("K4"));
+        departmentsSortDescending.add(new Department("K4\\SK1"));
+        departmentsSortDescending.add(new Department("K3"));
+        departmentsSortDescending.add(new Department("K3\\SK1"));
+        departmentsSortDescending.add(new Department("K3\\SK1\\SSK1"));
+        departmentsSortDescending.add(new Department("K2"));
+        departmentsSortDescending.add(new Department("K2\\SK1"));
+        departmentsSortDescending.add(new Department("K2\\SK1\\SSK1"));
+        departmentsSortDescending.add(new Department("K1"));
+        departmentsSortDescending.add(new Department("K1\\SK1"));
+        departmentsSortDescending.add(new Department("K1\\SK1\\SSK2"));
+        departmentsSortDescending.add(new Department("K1\\SK1\\SSK1"));
     }
 
     @Test
-    public void whenSortDepartments() {
-        departmentsSrc = DepartmentSort.sort(departmentsSrc);
-        assertThat(departmentsSrc, is(departmentsDist));
+    public void whenAscendingSortDepartments() {
+        departmentsSrc = DepartmentSort.sortAscending(departmentsSrc);
+        assertThat(departmentsSrc, is(departmentsSortAscending));
+    }
+
+    @Test
+    public void whenDescendingSortDepartments() {
+        departmentsSrc = DepartmentSort.sortDescending(departmentsSrc);
+        assertThat(departmentsSrc, is(departmentsSortDescending));
     }
 
 

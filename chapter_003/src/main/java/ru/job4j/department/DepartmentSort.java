@@ -10,13 +10,42 @@ import java.util.*;
  */
 public class DepartmentSort {
 
-    public static List<Department> sort(List<Department> src) {
+    /**
+     *sorting departments separated by "\\" ascending
+     * @param src original Department List
+     * @return sorted by ascending Department List
+     */
+    public static List<Department> sortAscending(List<Department> src) {
         Comparator<Department> comparator = (o1, o2) -> {
             int result = 0;
             int min = Math.min(o1.getSize(), o2.getSize());
             for (int i = 0; i < min; i++) {
                 if (!o1.getDepart(i).equals(o2.getDepart(i))) {
                     result = o1.getDepart(i).compareTo(o2.getDepart(i));
+                }
+            }
+            if (result == 0) {
+                result = o1.getSize() - o2.getSize();
+            }
+            return result;
+        };
+        List<Department> result = createCorrectStructure(src);
+        result.sort(comparator);
+        return result;
+    }
+
+    /**
+     *sorting departments separated by "\\" descending
+     * @param src original Department List
+     * @return sorted by descending Department List
+     */
+    public static List<Department> sortDescending(List<Department> src) {
+        Comparator<Department> comparator = (o1, o2) -> {
+            int result = 0;
+            int min = Math.min(o1.getSize(), o2.getSize());
+            for (int i = min - 1; i >= 0; i--) {
+                if (!o1.getDepart(i).equals(o2.getDepart(i))) {
+                    result = 0 - (o1.getDepart(i).compareTo(o2.getDepart(i)));
                 }
             }
             if (result == 0) {
