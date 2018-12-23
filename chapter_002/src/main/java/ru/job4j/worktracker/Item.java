@@ -1,5 +1,7 @@
 package ru.job4j.worktracker;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Class
  * @author sigaevaleksandr
@@ -53,5 +55,11 @@ public class Item {
 
     public String[] getComments() {
         return comments;
+    }
+
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm dd MMMM yyyy");
+        return String.format("id: %s name: %s description: %s create: %s", this.id, this.name, this.desc, dateFormat.format(this.created));
     }
 }

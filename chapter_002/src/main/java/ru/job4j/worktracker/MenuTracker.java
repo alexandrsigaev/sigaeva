@@ -2,6 +2,7 @@ package ru.job4j.worktracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Class
@@ -14,10 +15,13 @@ public class MenuTracker {
     private Input input;
     private Tracker tracker;
     private List<UserAction> actions = new ArrayList<>();
+    private final Consumer<String> output;
 
-    public MenuTracker(Input input, Tracker tracker) {
+    public MenuTracker(Input input, Tracker tracker, Consumer<String> output) {
         this.input = input;
         this.tracker = tracker;
+        this.output = output;
+
     }
 
     public void fillAction() {
@@ -36,7 +40,7 @@ public class MenuTracker {
     public void show() {
         for (UserAction action : actions) {
             if (action != null) {
-                System.out.println(action.info());
+                output.accept(action.info());
             }
         }
     }
@@ -57,14 +61,14 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("----------Add new ticket--------------");
+            output.accept("----------Add new ticket--------------");
             Item create = createItem();
             tracker.add(create);
-            System.out.println(String.format("------Ticket with name: %s and ID: %s create------", create.getName(), create.getId()));
+            output.accept(String.format("------Ticket with name: %s and ID: %s create------", create.getName(), create.getId()));
         }
     }
 
-    private static class ShowItems extends BaseAction {
+    private class ShowItems extends BaseAction {
 
         public ShowItems(int key, String name) {
             super(key, name);
@@ -72,9 +76,9 @@ public class MenuTracker {
 
         @Override
         public void execute(Input input, Tracker tracker) {
-            System.out.println("------All tickets------");
+            output.accept("------All tickets------");
             printInConsoleArrayOfItems(tracker.findAll());
-            System.out.println("------Complete------");
+            output.accept("------Complete------");
         }
     }
 
@@ -87,9 +91,9 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String replace = input.ask("enter the ticket id you want to replace");
-            System.out.println("------Replace------");
+            output.accept("------Replace------");
             tracker.replace(replace, createItem());
-            System.out.println("------The ticket replace------");
+            output.accept("------The ticket replace------");
         }
     }
 
@@ -102,14 +106,14 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String id = input.ask("enter the ID of ticket");
-            System.out.println("------Found tickets------");
+            output.accept("------Found tickets------");
             Item find = tracker.findById(id);
             if (find != null) {
-                System.out.println(String.format("id: %s name: %s description: %s create: %s", find.getId(), find.getName(), find.getDesc(), find.getCreated()));
+                output.accept(find.toString());
             } else {
-                System.out.println("ticket not found");
+                output.accept("ticket not found");
             }
-            System.out.println("------Complete------");
+            output.accept("------Complete------");
         }
     }
 
@@ -122,44 +126,44 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
             String name = input.ask("enter the name of ticket");
-            System.out.println("------Found tickets------");
+            output.accept("------Found tickets------");
             printInConsoleArrayOfItems(tracker.findByName(name));
-            System.out.println("------Complete------");
+            output.accept("------Complete------");
         }
     }
 
     private Item createItem() {
         String name = this.input.ask("Enter the name of the ticket");
         String description = this.input.ask("Enter the description of the ticket");
-        return new Item(name, description, (int) (System.currentTimeMillis() / 2560));
+        return new Item(name, description, System.currentTimeMillis());
     }
 
-    private static void printInConsoleArrayOfItems(List<Item> items) {
+    class DeleteItem extends BaseAction {
+
+        public DeleteItem(int key, String name) {
+            super(key, name);
+        }
+
+        @Override
+        public void execute(Input input, Tracker tracker) {
+            output.accept("------Delete ticket------");
+            String delete = input.ask("enter the ID of ticket");
+            if (!tracker.findAll().isEmpty()) {
+                tracker.delete(delete);
+            } else {
+                output.accept("------tickets are absent------");
+            }
+            output.accept("------Complete------");
+        }
+    }
+    private void printInConsoleArrayOfItems(List<Item> items) {
         if (!items.isEmpty()) {
             for (Item item : items) {
-                System.out.println(String.format("id: %s name: %s description: %s create: %s", item.getId(), item.getName(), item.getDesc(), item.getCreated()));
+                output.accept(item.toString());
             }
         } else {
-            System.out.println("tickets not found");
+            output.accept("tickets not found");
         }
     }
-}
 
-class DeleteItem extends BaseAction {
-
-    public DeleteItem(int key, String name) {
-        super(key, name);
-    }
-
-    @Override
-    public void execute(Input input, Tracker tracker) {
-        System.out.println("------Delete ticket------");
-        String delete = input.ask("enter the ID of ticket");
-        if (!tracker.findAll().isEmpty()) {
-            tracker.delete(delete);
-        } else {
-            System.out.println("------tickets are absent------");
-        }
-        System.out.println("------Complete------");
-    }
 }

@@ -1,15 +1,14 @@
 package ru.job4j.worktraker;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import ru.job4j.worktracker.*;
-
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.StringJoiner;
+import java.util.function.Consumer;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
@@ -21,45 +20,47 @@ import static org.junit.Assert.assertThat;
  */
 public class StartUITest {
 
-    private final PrintStream stdout = System.out;
+
     private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    private final Consumer<String> output = new Consumer<String>() {
+        private final PrintStream stdout = new PrintStream(out);
+        @Override
+        public void accept(String s) {
+            stdout.println(s);
+        }
+    };
 
     @Before
     public void loadOutput() {
         System.setOut(new PrintStream(out));
     }
 
-    @After
-    public void backOutput() {
-        System.setOut(stdout);
-    }
-
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll().get(0).getName(), is("test name"));
     }
 
     @Test
     public void whenFindAllThenFoundAllTickets() {
         Tracker tracker = new Tracker();
-        Item test1 = new Item("test1", "testDescription_1", (int) System.currentTimeMillis() / 100);
+        Item test1 = new Item("test1", "testDescription_1", System.currentTimeMillis());
         tracker.add(test1);
-        Item test2 = new Item("test2", "testDescription_2", (int) System.currentTimeMillis() / 100);
+        Item test2 = new Item("test2", "testDescription_2", System.currentTimeMillis());
         tracker.add(test2);
-        Item test3 = new Item("test3", "testDescription_3", (int) System.currentTimeMillis() / 100);
+        Item test3 = new Item("test3", "testDescription_3", System.currentTimeMillis());
         tracker.add(test3);
         Input input = new StubInput(new String[] {"1", "6"});
-        new StartUI(input, tracker).init();
-        assertThat(new String(out.toByteArray()), is(
+        new StartUI(input, tracker, output).init();
+        assertThat(this.out.toString(), is(
                 new StringJoiner(System.lineSeparator())
                         .add(printMenu())
                         .add("------All tickets------")
-                        .add(String.format("id: %s name: %s description: %s create: %s", test1.getId(), test1.getName(), test1.getDesc(), test1.getCreated()))
-                        .add(String.format("id: %s name: %s description: %s create: %s", test2.getId(), test2.getName(), test2.getDesc(), test2.getCreated()))
-                        .add(String.format("id: %s name: %s description: %s create: %s", test3.getId(), test3.getName(), test3.getDesc(), test3.getCreated()))
+                        .add(test1.toString())
+                        .add(test2.toString())
+                        .add(test3.toString())
                         .add("------Complete------")
                         .add(printMenu())
                         .add("")
@@ -73,7 +74,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Item item = tracker.add(new Item());
         Input input = new StubInput(new String[]{"2", item.getId(), "test name", "desc", "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findById(item.getId()).getName(), is("test name"));
     }
 
@@ -87,26 +88,26 @@ public class StartUITest {
         Item test3 = new Item();
         tracker.add(test3);
         Input input = new StubInput(new String[] {"3", test2.getId(), "6"});
-        new StartUI(input, tracker).init();
+        new StartUI(input, tracker, output).init();
         assertThat(tracker.findAll(), is(Arrays.asList(test1, test3)));
     }
 
     @Test
     public void whenFindByIdThenReturnFound() {
         Tracker tracker = new Tracker();
-        Item test1 = new Item("test1", "testDescription_1", (int) System.currentTimeMillis() / 100);
+        Item test1 = new Item("test1", "testDescription_1", System.currentTimeMillis());
         tracker.add(test1);
-        Item test2 = new Item("test2", "testDescription_2", (int) System.currentTimeMillis() / 100);
+        Item test2 = new Item("test2", "testDescription_2", System.currentTimeMillis());
         tracker.add(test2);
-        Item test3 = new Item("test3", "testDescription_3", (int) System.currentTimeMillis() / 100);
+        Item test3 = new Item("test3", "testDescription_3", System.currentTimeMillis());
         tracker.add(test3);
         Input input = new StubInput(new String[] {"4", test2.getId(), "6"});
-        new StartUI(input, tracker).init();
-        assertThat(new String(out.toByteArray()), is(
+        new StartUI(input, tracker, output).init();
+        assertThat(this.out.toString(), is(
                 new StringJoiner(System.lineSeparator())
                         .add(printMenu())
                         .add("------Found tickets------")
-                        .add(String.format("id: %s name: %s description: %s create: %s", test2.getId(), test2.getName(), test2.getDesc(), test2.getCreated()))
+                        .add(test2.toString())
                         .add("------Complete------")
                         .add(printMenu())
                         .add("")
@@ -118,19 +119,19 @@ public class StartUITest {
     @Test
     public void whenFindByNameThenReturnFound() {
         Tracker tracker = new Tracker();
-        Item test1 = new Item("test1", "testDescription_1", (int) System.currentTimeMillis() / 100);
+        Item test1 = new Item("test1", "testDescription_1", System.currentTimeMillis());
         tracker.add(test1);
-        Item test2 = new Item("test2", "testDescription_2", (int) System.currentTimeMillis() / 100);
+        Item test2 = new Item("test2", "testDescription_2", System.currentTimeMillis());
         tracker.add(test2);
-        Item test3 = new Item("test3", "testDescription_3", (int) System.currentTimeMillis() / 100);
+        Item test3 = new Item("test3", "testDescription_3", System.currentTimeMillis());
         tracker.add(test3);
         Input input = new StubInput(new String[] {"5", test2.getName(), "6"});
-        new StartUI(input, tracker).init();
-        assertThat(new String(out.toByteArray()), is(
+        new StartUI(input, tracker, output).init();
+        assertThat(this.out.toString(), is(
                 new StringJoiner(System.lineSeparator())
                         .add(printMenu())
                         .add("------Found tickets------")
-                        .add(String.format("id: %s name: %s description: %s create: %s", test2.getId(), test2.getName(), test2.getDesc(), test2.getCreated()))
+                        .add(test2.toString())
                         .add("------Complete------")
                         .add(printMenu())
                         .add("")
