@@ -1,7 +1,8 @@
 package ru.job4j;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Class
@@ -9,11 +10,7 @@ import java.util.List;
  * @since 12.03.2018
  */
 public class UserConvert {
-    public HashMap<Integer, User> process(List<User> list) {
-        HashMap<Integer, User> result = new HashMap<>();
-        for (User user : list) {
-            result.put(user.getId(), user);
-        }
-        return result;
+    public Map<Integer, User> process(List<User> list) {
+        return list.stream().collect(Collectors.toMap(User::getId, user -> user, (oldValue, newValue) -> newValue));
     }
 }

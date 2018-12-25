@@ -3,9 +3,9 @@ package ru.job4j;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -20,32 +20,13 @@ public class ConvertListTest {
     @Test
     public void whenGetListThenReturnArray() {
         ConvertList convert = new ConvertList();
-        List<Integer> list = new ArrayList<>();
-        list.add(2);
-        list.add(7);
-        list.add(1);
-        list.add(5);
-        list.add(4);
-        list.add(3);
-        list.add(8);
-        list.add(9);
-        assertThat(convert.toArray(list, 3), is(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}));
+        assertThat(convert.toArray(asList(2, 7, 1 ,5, 4, 3, 8, 9), 3), is(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}));
     }
 
     @Test
     public void whenGetArrayThenReturnList() {
         ConvertList convert = new ConvertList();
-        List<Integer> list = new ArrayList<>();
-        list.add(2);
-        list.add(7);
-        list.add(1);
-        list.add(5);
-        list.add(4);
-        list.add(3);
-        list.add(8);
-        list.add(9);
-        list.add(0);
-        assertThat(convert.toList(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}), is(list));
+        assertThat(convert.toList(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}), is(asList(2, 7, 1, 5, 4, 3, 8, 9, 0)));
     }
 
     @Test
@@ -54,7 +35,6 @@ public class ConvertListTest {
         List<int[]> list = new ArrayList<>();
         list.add(new int[]{1, 2});
         list.add(new int[]{1, 2, 12, 7, 28});
-        List<Integer> convertList = Arrays.asList(1, 2, 1, 2, 12, 7, 28);
-        assertThat(convert.convert(list), is(convertList));
+        assertThat(convert.convert(list), is(asList(1, 2, 1, 2, 12, 7, 28)));
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**
  * Class
@@ -41,7 +42,7 @@ public class Billing {
     }
 
     public List<Account> getUserAccounts(String passport) throws NotFoundUserException {
-        List<Account> result = new ArrayList<>();
+        List<Account> result;
         User user = this.getUserByPassport(passport);
         if (user.equals(null)) {
             throw new NotFoundUserException("User not found");
@@ -87,18 +88,12 @@ public class Billing {
     }
 
     private Account getAccountByRequsites(String requisite, List<Account> accounts) throws NotFoundAccountException {
-        Account result = null;
-
-        for (Account account : accounts) {
-            if (account.getRequsites().equals(requisite)) {
-                result = account;
-                break;
-            }
-        }
-        if (result == null) {
+        List<Account> result = accounts.stream().filter(account -> account.getRequsites()
+                .equals(requisite)).collect(Collectors.toList());
+        if (result.isEmpty()) {
             throw new NotFoundAccountException("Account not found");
         }
-        return result;
+        return result.get(0);
     }
 
 }

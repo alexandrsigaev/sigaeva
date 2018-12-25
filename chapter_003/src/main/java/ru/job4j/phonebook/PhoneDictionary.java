@@ -1,8 +1,10 @@
 package ru.job4j.phonebook;
 
 import ru.job4j.array.Parser;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Class
@@ -18,17 +20,10 @@ public class PhoneDictionary {
     }
 
     public List<Person> find(String key) {
-        List<Person> result = new ArrayList<>();
         Parser search = new Parser();
-        for (Person person : this.phonebook) {
-            if (!phonebook.isEmpty()) {
-                if (search.contains(String.format("%s, %s, %s, %s", person.name, person.surname, person.number, person.address), key)) {
-                    result.add(person);
-                }
-            } else {
-                break;
-            }
-        }
+        List<Person> result = phonebook.stream().filter((person) ->
+                search.contains(String.format("%s, %s, %s, %s", person.name, person.surname, person.number, person.address), key))
+                .collect(Collectors.toList());
         return result;
     }
 }

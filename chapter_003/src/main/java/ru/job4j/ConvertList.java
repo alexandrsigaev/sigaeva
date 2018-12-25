@@ -37,11 +37,11 @@ public class ConvertList {
 
     public List<Integer> convert(List<int[]> list) {
         List<Integer> result = new ArrayList<>();
-        for (int[] arr : list) {
-            for (Integer elem : arr) {
+        list.forEach(ints -> {
+            for (Integer elem : ints) {
                 result.add(elem);
             }
-        }
+        });
         return result;
     }
 }

@@ -68,6 +68,6 @@ public class SortUserTest {
         users.add(ti);
         User olg1 = new User(3, 28, "Ольга", "Москва");
         users.add(olg1);
-        assertThat(Arrays.asList(ti, vas, pet, olg, olg1, evg, svet), is(sortUser.sortByAllFields(users)));
+        assertThat(Arrays.asList(vas, evg, olg, olg1, pet, svet, ti), is(sortUser.sortByAllFields(users)));
     }
 }

@@ -18,7 +18,7 @@ public class ListCompare implements Comparator<String> {
             char first = arrO1[i];
             char second = arrO2[i];
             if (first != second) {
-                return first - second;
+                return Integer.compare(first, second);
             }
         }
         return arrO1.length - arrO2.length;
