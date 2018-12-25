@@ -20,7 +20,7 @@ public class ConvertListTest {
     @Test
     public void whenGetListThenReturnArray() {
         ConvertList convert = new ConvertList();
-        assertThat(convert.toArray(asList(2, 7, 1 ,5, 4, 3, 8, 9), 3), is(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}));
+        assertThat(convert.toArray(asList(2, 7, 1, 5, 4, 3, 8, 9), 3), is(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}));
     }
 
     @Test
