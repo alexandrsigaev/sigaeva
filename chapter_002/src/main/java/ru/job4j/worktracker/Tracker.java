@@ -2,7 +2,9 @@ package ru.job4j.worktracker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * Class
@@ -33,23 +35,12 @@ public class Tracker implements ITracker {
     }
 
     public List<Item> findByName(String key) {
-        List<Item> itFind = new ArrayList<>();
-        for (Item item : items) {
-            if (item != null && item.getName().equals(key)) {
-                itFind.add(item);
-            }
-        }
-        return itFind;
+        return items.stream().filter(item -> item != null && item.getName().equals(key)).collect(Collectors.toList());
     }
 
     public Item findById(String id) {
-        Item itFindById = null;
-        for (Item item : items) {
-            if (item != null && item.getId().equals(id)) {
-                itFindById = item;
-            }
-        }
-        return itFindById;
+        Optional<Item> result = items.stream().filter(item -> item != null && item.getId().equals(id)).findAny();
+        return result.orElse(null);
     }
 
     private String generateId() {
