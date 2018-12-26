@@ -19,47 +19,51 @@ import static org.junit.Assert.assertThat;
  */
 public class DepartmentSortTest {
 
-    private List<Department> departmentsSrc = new ArrayList<>();
-    private List<Department> departmentsSortAscending = new ArrayList<>();
-    private List<Department> departmentsSortDescending = new ArrayList<>();
+    private List<Department> departmentsSrc;
+    private List<Department> departmentsSortAscending;
+    private List<Department> departmentsSortDescending;
 
 
     @Before
     public void setUp() {
-        departmentsSrc.add(new Department("K1"));
-        departmentsSrc.add(new Department("K2"));
-        departmentsSrc.add(new Department("K1\\SK1\\SSK1"));
-        departmentsSrc.add(new Department("K4\\SK1\\"));
-        departmentsSrc.add(new Department("K1\\SK1\\SSK2"));
-        departmentsSrc.add(new Department("K3\\SK1\\SSK1"));
-        departmentsSrc.add(new Department("K2\\SK1\\SSK1"));
+        this.departmentsSrc = new ArrayList<>(List.of(
+                new Department("K1"),
+                new Department("K1\\SK1\\SSK1"),
+                new Department("K4\\SK1\\"),
+                new Department("K1\\SK1\\SSK2"),
+                new Department("K3\\SK1\\SSK1"),
+                new Department("K2\\SK1\\SSK1")
+        ));
 
-        departmentsSortAscending.add(new Department("K1"));
-        departmentsSortAscending.add(new Department("K1\\SK1"));
-        departmentsSortAscending.add(new Department("K1\\SK1\\SSK1"));
-        departmentsSortAscending.add(new Department("K1\\SK1\\SSK2"));
-        departmentsSortAscending.add(new Department("K2"));
-        departmentsSortAscending.add(new Department("K2\\SK1"));
-        departmentsSortAscending.add(new Department("K2\\SK1\\SSK1"));
-        departmentsSortAscending.add(new Department("K3"));
-        departmentsSortAscending.add(new Department("K3\\SK1"));
-        departmentsSortAscending.add(new Department("K3\\SK1\\SSK1"));
-        departmentsSortAscending.add(new Department("K4"));
-        departmentsSortAscending.add(new Department("K4\\SK1"));
+        this.departmentsSortAscending = new ArrayList<>(List.of(
+                new Department("K1"),
+                new Department("K1\\SK1"),
+                new Department("K1\\SK1\\SSK1"),
+                new Department("K1\\SK1\\SSK2"),
+                new Department("K2"),
+                new Department("K2\\SK1"),
+                new Department("K2\\SK1\\SSK1"),
+                new Department("K3"),
+                new Department("K3\\SK1"),
+                new Department("K3\\SK1\\SSK1"),
+                new Department("K4"),
+                new Department("K4\\SK1")
+        ));
 
-
-        departmentsSortDescending.add(new Department("K4"));
-        departmentsSortDescending.add(new Department("K4\\SK1"));
-        departmentsSortDescending.add(new Department("K3"));
-        departmentsSortDescending.add(new Department("K3\\SK1"));
-        departmentsSortDescending.add(new Department("K3\\SK1\\SSK1"));
-        departmentsSortDescending.add(new Department("K2"));
-        departmentsSortDescending.add(new Department("K2\\SK1"));
-        departmentsSortDescending.add(new Department("K2\\SK1\\SSK1"));
-        departmentsSortDescending.add(new Department("K1"));
-        departmentsSortDescending.add(new Department("K1\\SK1"));
-        departmentsSortDescending.add(new Department("K1\\SK1\\SSK2"));
-        departmentsSortDescending.add(new Department("K1\\SK1\\SSK1"));
+        this.departmentsSortDescending = new ArrayList<>(List.of(
+                new Department("K4"),
+                new Department("K4\\SK1"),
+                new Department("K3"),
+                new Department("K3\\SK1"),
+                new Department("K3\\SK1\\SSK1"),
+                new Department("K2"),
+                new Department("K2\\SK1"),
+                new Department("K2\\SK1\\SSK1"),
+                new Department("K1"),
+                new Department("K1\\SK1"),
+                new Department("K1\\SK1\\SSK2"),
+                new Department("K1\\SK1\\SSK1")
+        ));
     }
 
     @Test

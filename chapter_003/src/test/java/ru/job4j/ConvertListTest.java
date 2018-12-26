@@ -26,7 +26,7 @@ public class ConvertListTest {
     @Test
     public void whenGetArrayThenReturnList() {
         ConvertList convert = new ConvertList();
-        assertThat(convert.toList(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}), is(asList(2, 7, 1, 5, 4, 3, 8, 9, 0)));
+        assertThat(convert.toList(new int[][] {{2, 7, 1}, {5, 4, 3}, {8, 9, 0}}), is(List.of(2, 7, 1, 5, 4, 3, 8, 9, 0)));
     }
 
     @Test
@@ -35,6 +35,6 @@ public class ConvertListTest {
         List<int[]> list = new ArrayList<>();
         list.add(new int[]{1, 2});
         list.add(new int[]{1, 2, 12, 7, 28});
-        assertThat(convert.convert(list), is(asList(1, 2, 1, 2, 12, 7, 28)));
+        assertThat(convert.convert(list), is(List.of(1, 2, 1, 2, 12, 7, 28)));
     }
 }
