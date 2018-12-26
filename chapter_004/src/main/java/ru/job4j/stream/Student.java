@@ -17,6 +17,9 @@ public class Student implements Comparator<Student> {
     private String name;
     private int scope;
 
+    public Student() {
+    }
+
     public Student(String name, int scope) {
         this.name = name;
         this.scope = scope;
@@ -32,12 +35,12 @@ public class Student implements Comparator<Student> {
 
     @Override
     public int compare(Student o1, Student o2) {
-        return Comparator.comparing(Student::getName).thenComparing(Student::getScope).compare(o1, o2);
+        return Integer.compare(o2.scope, o1.scope);
     }
 
-    public static List<Student> levelOf(List<Student> students, int bound) {
-        return students.stream().flatMap(Stream::ofNullable).filter(
-                student -> student.getScope() > bound).collect(Collectors.toList());
+    public List<Student> levelOf(List<Student> students, int bound) {
+        return students.stream().flatMap(Stream::ofNullable).sorted(this).
+                takeWhile(student -> student.getScope() > bound).collect(Collectors.toList());
     }
 
     @Override

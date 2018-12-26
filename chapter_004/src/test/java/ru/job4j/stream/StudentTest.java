@@ -18,11 +18,12 @@ import static org.junit.Assert.assertThat;
 public class StudentTest {
 
     @Test
-    public void whenLeveOfListStudents() {
-        assertThat(Student.levelOf(Stream.of(new Student("Alex", 4), null, new Student("Ben", 3),
+    public void whenLevelOfListStudents() {
+        assertThat(new Student().levelOf(Stream.of(new Student("Alex", 4), null, new Student("Ben", 3),
                 new Student("Olga", 2), null, null, new Student("Jon", 4), null,
-                new Student("Bob", 5)).collect(Collectors.toList()), 3), is(List.of(new Student("Alex", 4),
-                new Student("Jon", 4), new Student("Bob", 5))));
+                new Student("Bob", 5)).collect(Collectors.toList()), 3), is(List.of(
+                        new Student("Bob", 5), new Student("Alex", 4),
+                new Student("Jon", 4))));
     }
 
 }
