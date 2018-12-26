@@ -60,7 +60,7 @@ public class DepartmentSort {
         Set<Department> createDepart = new HashSet<>();
         for (Department depart : src) {
             StringBuilder builder = new StringBuilder();
-            for (String part: depart.getDepartments()) {
+            for (var part: depart.getDepartments()) {
                 if (builder.length() != 0) {
                     builder.append("\\");
                }

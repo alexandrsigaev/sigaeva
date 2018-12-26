@@ -20,8 +20,8 @@ public class PhoneDictionary {
     }
 
     public List<Person> find(String key) {
-        Parser search = new Parser();
-        List<Person> result = phonebook.stream().filter((person) ->
+        var search = new Parser();
+        var result = phonebook.stream().filter((person) ->
                 search.contains(String.format("%s, %s, %s, %s", person.name, person.surname, person.number, person.address), key))
                 .collect(Collectors.toList());
         return result;

@@ -17,8 +17,8 @@ public class PriorityQueue {
      * @param task задача
      */
     public void put(Task task) {
-        boolean contain = false;
-        for (Task elem : tasks) {
+        var contain = false;
+        for (var elem : tasks) {
             if (elem.getPriority() > task.getPriority()) {
                 this.tasks.add(this.tasks.indexOf(elem), task);
                 contain = true;

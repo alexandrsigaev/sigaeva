@@ -78,7 +78,7 @@ public class Billing {
 
     private User getUserByPassport(String passport) {
         User user = null;
-        for (User client : this.clients.keySet()) {
+        for (var client : this.clients.keySet()) {
             if (passport.equals(client.getPassport())) {
                 user = client;
                 break;
