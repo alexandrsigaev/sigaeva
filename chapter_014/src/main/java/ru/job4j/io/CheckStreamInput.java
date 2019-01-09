@@ -18,7 +18,7 @@ public class CheckStreamInput {
 
     public boolean isNumber(InputStream in) {
         boolean result = false;
-        try (var inputStream = in; var bufferStream = new BufferedInputStream(inputStream)){
+        try (var inputStream = in; var bufferStream = new BufferedInputStream(inputStream)) {
             var number = bufferStream.read();
             if (number % 2 == 0) {
                 result = true;
