@@ -1,4 +1,4 @@
-package ru.job4j.io.sort_file;
+package ru.job4j.io.sortfile;
 
 import java.io.File;
 
