@@ -54,6 +54,8 @@ public class ZipArchiver {
                 case "-o":
                     zipName = args[i + 1];
                     break;
+                default:
+                    break;
             }
         }
         ZipArchiver zipArchiver = new ZipArchiver(path, zipName, extensions);
@@ -64,7 +66,7 @@ public class ZipArchiver {
     public void zipDirrectory() {
         LOGGER.info("Archiving start");
         File file = new File(this.correctInputPath() + this.zipName);
-        try(ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(file, false))) {
+        try (ZipOutputStream zipOutputStream = new ZipOutputStream(new FileOutputStream(file, false))) {
             Path inputPath = Paths.get(path);
             Files.walk(inputPath).filter(p -> !Files.isDirectory(p))
                     .filter(this::filterExtension)
@@ -88,7 +90,7 @@ public class ZipArchiver {
     private boolean filterExtension(Path path) {
         boolean res = false;
         for (String ex : this.extension) {
-            if (path.toString().endsWith(ex)){
+            if (path.toString().endsWith(ex)) {
                 res = true;
                 break;
             }

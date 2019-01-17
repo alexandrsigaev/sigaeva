@@ -14,7 +14,7 @@
         <param name="append" value="false" />
         <param name="maxFileSize" value="10MB" />
         <param name="maxBackupIndex" value="10" />
-        <param name="file" value="${catalina.home}/logs/chapter13.log" />
+        <param name="file" value="chapter_014/bot.txt" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
                    value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
@@ -22,10 +22,9 @@
     </appender>
 
     <root>
-        <level value="error" />
+        <level value="DEBUG" />
         <appender-ref ref="console" />
-        <level value="info" />
-        <appender-ref ref="console" />
+        <appender-ref ref="file" />
     </root>
 
 </log4j:configuration>
