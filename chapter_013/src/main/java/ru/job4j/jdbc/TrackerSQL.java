@@ -18,7 +18,6 @@ import java.util.Properties;
 public class TrackerSQL implements ITracker, AutoCloseable {
 
     private final Connection connection;
-    private Properties config = new Properties();
     private Properties trackerScript = new Properties();
     private final List<Item> items = new ArrayList<>();
 
@@ -140,7 +139,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             Integer id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String description = resultSet.getString("description");
-            Long created = resultSet.getTimestamp("created").getTime();
+            Long created = resultSet.getTimestamp("creat").getTime();
             Item item = new Item(id.toString(), name, description, created);
             items.add(item);
         }

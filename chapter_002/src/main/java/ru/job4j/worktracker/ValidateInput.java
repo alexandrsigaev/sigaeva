@@ -28,7 +28,7 @@ public class ValidateInput implements Input {
                 key = Integer.valueOf(this.input.ask(question, range));
                 invalid = false;
             } catch (NumberFormatException nfe) {
-                System.out.println("Please enter validate count");
+                System.out.println("Please enter service count");
             } catch (MenuOutException e) {
                 System.out.println("Enter invalid count, please enter valid count from menu");
             }

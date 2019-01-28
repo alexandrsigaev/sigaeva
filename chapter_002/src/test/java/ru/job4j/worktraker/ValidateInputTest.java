@@ -40,7 +40,7 @@ public class ValidateInputTest {
         assertThat(this.mem.toString(), is(
                 new StringJoiner(System.lineSeparator())
                         .add("Enter invalid count, please enter valid count from menu")
-                        .add("Please enter validate count")
+                        .add("Please enter service count")
                         .add("")
                         .toString()
                 )
