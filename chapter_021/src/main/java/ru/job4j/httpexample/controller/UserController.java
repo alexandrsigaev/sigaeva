@@ -3,7 +3,6 @@ package ru.job4j.httpexample.controller;
 import ru.job4j.httpexample.model.User;
 import ru.job4j.httpexample.service.UserService;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,7 +24,7 @@ public class UserController extends HttpServlet {
     private final DispatchActions actions = new DispatchActions();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter printWriter = resp.getWriter();
         String tmp = req.getParameter("do");
         printWriter.write("<h1>All Users</h1>");
@@ -37,7 +36,7 @@ public class UserController extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = req.getParameter("action");
         Map<String, String[]> parameters = req.getParameterMap();
         String result;

@@ -14,14 +14,14 @@ import java.util.Map;
  */
 public class UserService {
 
-    private static UserService instance = new UserService();
+    private static final UserService INSTANCE = new UserService();
     private final UserDAO userDAO = UserDAO.getInstance();
 
     private UserService() {
     }
 
     public static UserService getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public boolean add(Map<String, String[]> mapReq) {
@@ -67,7 +67,7 @@ public class UserService {
         return userDAO.findAll();
     }
 
-    public User findById(int id) {
+    private User findById(int id) {
         return userDAO.findById(id);
     }
 }

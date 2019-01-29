@@ -20,22 +20,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UserDAO implements Store<User> {
 
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class.getName());
-    private static UserDAO instance;
-    private Connection connection;
-    private Properties userScripts = new Properties();
-    private List<User> users = new CopyOnWriteArrayList<>();
+    private static final UserDAO INSTANCE = new UserDAO();
+    private final Connection connection = getConnection();
+    private final Properties userScripts = new Properties();
+    private final List<User> users = new CopyOnWriteArrayList<>();
 
     private UserDAO() {
+        INSTANCE.initProperties();
+        INSTANCE.initTable();
     }
 
-    synchronized public static UserDAO getInstance() {
-        if (instance == null) {
-            instance = new UserDAO();
-            instance.initProperties();
-            instance.initConnection();
-            instance.initTable();
-        }
-        return instance;
+    public static UserDAO getInstance() {
+        return INSTANCE;
     }
 
     private void initTable() {
@@ -58,7 +54,7 @@ public class UserDAO implements Store<User> {
         }
     }
 
-    public void initConnection() {
+    private static Connection getConnection() {
         Connection connection = null;
         Properties config = new Properties();
         try (InputStream input = UserDAO.class.getClassLoader().getResourceAsStream("app.properties")) {
@@ -71,13 +67,12 @@ public class UserDAO implements Store<User> {
             );
         } catch (IOException | ClassNotFoundException | SQLException ex) {
             LOGGER.error(ex.getMessage(), ex);
-            System.out.println(ex.getMessage());
         }
-        this.connection = connection;
+        return connection;
     }
 
     @Override
-    synchronized public List<User> findAll() {
+    public List<User> findAll() {
         try (Statement st = this.connection.createStatement()) {
             try (ResultSet rs = st.executeQuery(this.userScripts.getProperty("SELECT_ALL"))) {
                 fillListUser(rs);
@@ -89,7 +84,7 @@ public class UserDAO implements Store<User> {
     }
 
     @Override
-    synchronized public User findById(int id) {
+    public User findById(int id) {
         try (PreparedStatement ps = this.connection.prepareStatement(this.userScripts.getProperty("FIND_USER_BY_ID"))) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -104,7 +99,7 @@ public class UserDAO implements Store<User> {
     }
 
     @Override
-    synchronized public boolean add(User user) {
+    public boolean add(User user) {
         boolean result = false;
         try (PreparedStatement ps = this.connection.prepareStatement(this.userScripts.getProperty("ADD_USER"))) {
             ps.setString(1, user.getName());
@@ -121,7 +116,7 @@ public class UserDAO implements Store<User> {
     }
 
     @Override
-    synchronized public boolean delete(User user) {
+    public boolean delete(User user) {
         boolean result = false;
         try (PreparedStatement ps = this.connection.prepareStatement(this.userScripts.getProperty("DELETE_USER"))) {
             ps.setInt(1, user.getId());
@@ -134,7 +129,7 @@ public class UserDAO implements Store<User> {
     }
 
     @Override
-    synchronized public boolean update(User user) {
+    public boolean update(User user) {
         boolean result = false;
         try (PreparedStatement ps = this.connection.prepareStatement(this.userScripts.getProperty("UPDATE_USER"))) {
             ps.setString(1, user.getName());
@@ -157,7 +152,7 @@ public class UserDAO implements Store<User> {
                 result = rs.next();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
         return result;
     }
@@ -170,7 +165,7 @@ public class UserDAO implements Store<User> {
     }
 
     private User createUser(ResultSet resultSet) throws SQLException {
-        Integer id = resultSet.getInt("id");
+        int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
         String login = resultSet.getString("login");
         String email = resultSet.getString("email");
