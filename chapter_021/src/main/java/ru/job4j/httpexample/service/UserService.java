@@ -1,6 +1,7 @@
 package ru.job4j.httpexample.service;
 
-import ru.job4j.httpexample.dao.UserDAO;
+import ru.job4j.httpexample.dao.FakeUserDAO;
+import ru.job4j.httpexample.dao.Store;
 import ru.job4j.httpexample.model.User;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Map;
 public class UserService {
 
     private static final UserService INSTANCE = new UserService();
-    private final UserDAO userDAO = UserDAO.getInstance();
+    private final Store<User> userDAO = FakeUserDAO.getInstance();
 
     private UserService() {
     }
@@ -31,7 +32,7 @@ public class UserService {
                 mapReq.get("password")[0],
                 mapReq.get("email")[0]);
         boolean result = false;
-        if (!this.userDAO.userLoginIsExists(user.getLogin())) {
+        if (!this.userDAO.userLoginIsExists(user)) {
             result = userDAO.add(user);
         }
         return result;
@@ -67,7 +68,7 @@ public class UserService {
         return userDAO.findAll();
     }
 
-    private User findById(int id) {
+    public User findById(int id) {
         return userDAO.findById(id);
     }
 }

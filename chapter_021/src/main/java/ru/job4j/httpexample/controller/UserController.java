@@ -3,6 +3,7 @@ package ru.job4j.httpexample.controller;
 import ru.job4j.httpexample.model.User;
 import ru.job4j.httpexample.service.UserService;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import java.util.function.Function;
  * @author sigaevaleksandr
  * @since 26.01.2019
  */
+@WebServlet(urlPatterns = "/list", loadOnStartup = 1)
 public class UserController extends HttpServlet {
 
     private final UserService logic = UserService.getInstance();
@@ -26,13 +28,31 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         PrintWriter printWriter = resp.getWriter();
-        String tmp = req.getParameter("do");
-        printWriter.write("<h1>All Users</h1>");
-        if (tmp.equals("getAll")) {
-            for (User user : this.logic.findAll()) {
-                printWriter.write("<h2>" + user.toString() + "</h2>");
-            }
+        StringBuilder sb = new StringBuilder();
+        sb.append("<table>");
+        sb.append("<h1>All users</h1>");
+        sb.append("<tr><th>name</th><th>login</th><th>email</th><th>password</th></tr>");
+        for (User user : this.logic.findAll()) {
+                sb.append("<tr>" + "<td>")
+                        .append(user.getName()).append("</td>").append("<td>")
+                        .append(user.getLogin()).append("</td>").append("<td>")
+                        .append(user.getEmail()).append("</td>").append("<td>")
+                        .append(user.getPassword()).append("</td>").append("<td>").append("<form action= '")
+                        .append(req.getContextPath()).append("/update', method='get'>")
+                        .append("<input type='hidden' name='id' value='")
+                        .append(user.getId()).append("'/>").append("<input type= 'submit' value='update'>")
+                        .append("</form>").append("</td>").append("<td>").append("<form action='")
+                        .append(req.getContextPath()).append("/list?action=delete' , method='post'>")
+                        .append("<input type='hidden' action='delete' name='id' value='")
+                        .append(user.getId()).append("'/>").append("<input type= 'submit' value='delete'>")
+                        .append("</form>").append("</td>").append("</tr>");
         }
+        sb.append("</table>");
+        sb.append("<form action= '").append(req.getContextPath())
+                .append("/create', method='get'>")
+                .append("<input type='submit' value='create'>")
+                .append("</form>");
+        printWriter.write(this.getHtml(sb.toString(), ""));
     }
 
     @Override
@@ -45,10 +65,10 @@ public class UserController extends HttpServlet {
         } catch (NullPointerException e) {
             result = "error: incorrect request";
         }
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
+        PrintWriter writer = resp.getWriter();
         writer.append(this.getHtml(
                 result,
-                "<form action='" + req.getContextPath() + "/listUsr' method='get'>"
+                "<form action='" + req.getContextPath() + "/list' method='get'>"
                         + "<input type='submit' value='OK'>"
                         + "</form>"));
         writer.flush();
@@ -59,7 +79,7 @@ public class UserController extends HttpServlet {
                 + "<html lang=\"en\">"
                 + "<head>"
                 + "<meta charset=\"UTF-8\">"
-                + "<title>Edit User</title>"
+                + "<title>User</title>"
                 + "</head>"
                 + "<body>"
                 + message
@@ -73,7 +93,7 @@ public class UserController extends HttpServlet {
 
         private DispatchActions() {
             dispatch.put(
-                    "add", stringMap -> {
+                    "create", stringMap -> {
                         if (!logic.add(stringMap)) {
                             return "User with this login is exists";
                         }

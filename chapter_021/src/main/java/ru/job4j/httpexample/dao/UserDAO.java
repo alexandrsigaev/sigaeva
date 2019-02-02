@@ -20,12 +20,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UserDAO implements Store<User> {
 
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class.getName());
+    private final Connection connection;
     private static final UserDAO INSTANCE = new UserDAO();
-    private final Connection connection = getConnection();
     private final Properties userScripts = new Properties();
     private final List<User> users = new CopyOnWriteArrayList<>();
 
     private UserDAO() {
+        this.connection = this.getConnection();
         INSTANCE.initProperties();
         INSTANCE.initTable();
     }
@@ -38,7 +39,7 @@ public class UserDAO implements Store<User> {
         try (Statement st = this.connection.createStatement()) {
             st.executeUpdate(this.userScripts.getProperty("CREATE_TABLE_USERS"));
         } catch (SQLException e) {
-            e.printStackTrace();
+            LOGGER.error(e.getMessage(), e);
         }
     }
 
@@ -54,7 +55,7 @@ public class UserDAO implements Store<User> {
         }
     }
 
-    private static Connection getConnection() {
+    private Connection getConnection() {
         Connection connection = null;
         Properties config = new Properties();
         try (InputStream input = UserDAO.class.getClassLoader().getResourceAsStream("app.properties")) {
@@ -144,10 +145,10 @@ public class UserDAO implements Store<User> {
         return result;
     }
 
-    public boolean userLoginIsExists(String login) {
+    public boolean userLoginIsExists(User user) {
         boolean result = false;
         try (PreparedStatement ps = this.connection.prepareStatement(this.userScripts.getProperty("FIND_USER_BY_LOGIN"))) {
-            ps.setString(1, login);
+            ps.setString(1, user.getLogin());
             try (ResultSet rs = ps.executeQuery()) {
                 result = rs.next();
             }
