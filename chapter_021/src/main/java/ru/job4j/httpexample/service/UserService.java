@@ -32,7 +32,7 @@ public class UserService {
                 mapReq.get("password")[0],
                 mapReq.get("email")[0]);
         boolean result = false;
-        if (!this.userDAO.userLoginIsExists(user)) {
+        if (!this.userDAO.userLoginIsExists(user) && !this.validAttributeOfNull(mapReq)) {
             result = userDAO.add(user);
         }
         return result;
@@ -42,7 +42,7 @@ public class UserService {
         int id = Integer.parseInt(mapReq.get("id")[0]);
         boolean result = false;
         User tmp = this.findById(id);
-        if (tmp != null) {
+        if (tmp != null && !this.validAttributeOfNull(mapReq)) {
             User user = new User(id,
                     mapReq.get("name")[0],
                     mapReq.get("login")[0],
@@ -70,5 +70,16 @@ public class UserService {
 
     public User findById(int id) {
         return userDAO.findById(id);
+    }
+    
+    private boolean validAttributeOfNull(Map<String, String[]> mapReq) {
+        boolean res = false;
+        for (Map.Entry<String, String[]> entry : mapReq.entrySet()) {
+            if (entry.getValue()[0].length() == 0) {
+                res = true;
+                break;
+            }
+        }
+        return res;
     }
 }

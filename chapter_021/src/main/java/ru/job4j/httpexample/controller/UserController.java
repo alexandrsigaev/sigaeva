@@ -2,12 +2,12 @@ package ru.job4j.httpexample.controller;
 
 import ru.job4j.httpexample.service.UserService;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -25,7 +25,7 @@ public class UserController extends HttpServlet {
     private final DispatchActions actions = new DispatchActions();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = req.getParameter("action");
         Map<String, String[]> parameters = req.getParameterMap();
         String result;
@@ -34,28 +34,10 @@ public class UserController extends HttpServlet {
         } catch (NullPointerException e) {
             result = "error: incorrect request";
         }
-        PrintWriter writer = resp.getWriter();
-        writer.append(this.getHtml(
-                result,
-                "<form action='" + req.getContextPath() + "/' method='get'>"
-                        + "<input type='submit' value='OK'>"
-                        + "</form>"));
-        writer.flush();
+        req.setAttribute("massage", result);
+        req.getRequestDispatcher("/jsp/changeResponseUser.jsp").forward(req, resp);
     }
 
-    private String getHtml(String message, String form) {
-        return "<!DOCTYPE html>"
-                + "<html lang=\"en\">"
-                + "<head>"
-                + "<meta charset=\"UTF-8\">"
-                + "<title>User</title>"
-                + "</head>"
-                + "<body>"
-                + message
-                + form
-                + "</body>"
-                + "</html>";
-    }
 
     private class DispatchActions {
         private HashMap<String, Function<Map<String, String[]>, String>> dispatch = new HashMap<>();
@@ -63,19 +45,21 @@ public class UserController extends HttpServlet {
         private DispatchActions() {
             dispatch.put(
                     "create", stringMap -> {
+                        String name = stringMap.get("name")[0];
                         if (!logic.add(stringMap)) {
-                            return "User with this login is exists";
+                            return "User with this login is exists or invalid value entered!";
                         }
-                        return "User added!";
+                        return String.format("User: %s added!", name);
                     }
             );
             dispatch.put(
                     "update",
                     stringMap -> {
+                        String name = stringMap.get("name")[0];
                         if (!logic.update(stringMap)) {
-                            return "User not found!";
+                            return "User not found or invalid value entered!";
                         }
-                        return "User updated!";
+                        return String.format("User: %s updated!", name);
                     }
             );
             dispatch.put(
