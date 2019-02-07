@@ -1,5 +1,5 @@
-<%@ page import="ru.job4j.httpexample.dao.FakeUserDAO" %>
 <%@ page import="ru.job4j.httpexample.model.User" %>
+<%@ page import="ru.job4j.httpexample.service.UserService" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -8,6 +8,7 @@
     <link href='css/style.css' rel='stylesheet' type='text/css'>
 </head>
 <body>
+<%!private final UserService service = UserService.getInstance();%>
 <form action="<%=request.getContextPath()%>/list" method="post"></form>
 <div class="form-style-2">
     <table>
@@ -20,7 +21,7 @@
             <th>email</th>
             <th>password</th>
         </tr>
-        <%for (User user: FakeUserDAO.getInstance().findAll()) { %>
+        <%for (User user: service.findAll()) { %>
         <tr>
             <td><%=user.getName()%></td>
             <td><%=user.getLogin()%></td>
