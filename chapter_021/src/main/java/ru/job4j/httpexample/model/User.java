@@ -25,7 +25,7 @@ public class User {
         this.createDate = LocalDateTime.now();
     }
 
-    public User(int id, String name, String login, String email, String password, LocalDateTime createDate) {
+    public User(int id, String name, String login, String password, String email, LocalDateTime createDate) {
         this.id = id;
         this.name = name;
         this.login = login;

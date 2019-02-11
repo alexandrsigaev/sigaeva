@@ -8,9 +8,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Class
@@ -19,16 +19,16 @@ import java.util.concurrent.CopyOnWriteArrayList;
  * @since 26.01.2019
  */
 public class UserDAO implements Store<User> {
-
+    private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class.getName());
     private static final UserDAO INSTANCE = new UserDAO();
-    private static final BasicDataSource SOURCE = new BasicDataSource();
     private final Properties userScripts = new Properties();
-    private final List<User> users = new CopyOnWriteArrayList<>();
+
+
 
     private UserDAO() {
         Properties  properties = new Properties();
-        try (InputStream in = UserDAO.class.getClassLoader().getResourceAsStream("app.properties")){
+        try (InputStream in = UserDAO.class.getClassLoader().getResourceAsStream("app.properties")) {
             properties.load(in);
             SOURCE.setDriverClassName(properties.getProperty("driver-class-name"));
             SOURCE.setUrl(properties.getProperty("url"));
@@ -40,12 +40,12 @@ public class UserDAO implements Store<User> {
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        INSTANCE.initProperties();
-        INSTANCE.initTable();
+        this.initProperties();
+        this.initTable();
     }
 
     public static UserDAO getInstance() {
-        return INSTANCE;
+        return UserDAO.INSTANCE;
     }
 
     private void initTable() {
@@ -70,14 +70,17 @@ public class UserDAO implements Store<User> {
 
     @Override
     public List<User> findAll() {
+        List<User> allUsers = new ArrayList<>();
         try (Statement st = SOURCE.getConnection().createStatement()) {
             try (ResultSet rs = st.executeQuery(this.userScripts.getProperty("SELECT_ALL"))) {
-                fillListUser(rs);
+                while (rs.next()) {
+                    allUsers.add(this.createUser(rs));
+                }
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        return this.users;
+        return allUsers;
     }
 
     @Override
@@ -101,8 +104,8 @@ public class UserDAO implements Store<User> {
         try (PreparedStatement ps = SOURCE.getConnection().prepareStatement(this.userScripts.getProperty("ADD_USER"))) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPassword());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getEmail());
             ps.setTimestamp(5, Timestamp.valueOf(user.getCreateDate()));
             ps.execute();
             result = true;
@@ -134,9 +137,10 @@ public class UserDAO implements Store<User> {
             ps.setString(3, user.getPassword());
             ps.setString(4, user.getEmail());
             ps.setInt(5, user.getId());
-            result = ps.execute();
+            result = ps.executeUpdate() == 1;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
+
         }
         return result;
     }
@@ -154,13 +158,6 @@ public class UserDAO implements Store<User> {
         return result;
     }
 
-    private void fillListUser(ResultSet resultSet) throws SQLException {
-        this.users.clear();
-        while (resultSet.next()) {
-            this.users.add(this.createUser(resultSet));
-        }
-    }
-
     private User createUser(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
@@ -168,6 +165,6 @@ public class UserDAO implements Store<User> {
         String email = resultSet.getString("email");
         String password = resultSet.getString("password");
         LocalDateTime creatDate = resultSet.getTimestamp("creatDate").toLocalDateTime();
-        return new User(id, name, login, email, password, creatDate);
+        return new User(id, name, login, password, email, creatDate);
     }
 }
