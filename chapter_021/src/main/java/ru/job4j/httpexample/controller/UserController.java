@@ -29,11 +29,7 @@ public class UserController extends HttpServlet {
         String action = req.getParameter("action");
         Map<String, String[]> parameters = req.getParameterMap();
         String result;
-        try {
-            result = actions.execute(action, parameters);
-        } catch (NullPointerException e) {
-            result = "error: incorrect request";
-        }
+        result = actions.execute(action, parameters);
         req.setAttribute("massage", result);
         req.getRequestDispatcher("/jsp/changeResponseUser.jsp").forward(req, resp);
     }

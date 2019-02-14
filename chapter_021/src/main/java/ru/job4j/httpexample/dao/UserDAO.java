@@ -22,12 +22,10 @@ public class UserDAO implements Store<User> {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final Logger LOGGER = Logger.getLogger(UserDAO.class.getName());
     private static final UserDAO INSTANCE = new UserDAO();
-    private final Properties userScripts = new Properties();
-
 
 
     private UserDAO() {
-        Properties  properties = new Properties();
+        Properties properties = new Properties();
         try (InputStream in = UserDAO.class.getClassLoader().getResourceAsStream("app.properties")) {
             properties.load(in);
             SOURCE.setDriverClassName(properties.getProperty("driver-class-name"));
@@ -40,42 +38,20 @@ public class UserDAO implements Store<User> {
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        this.initProperties();
-        this.initTable();
     }
 
     public static UserDAO getInstance() {
         return UserDAO.INSTANCE;
     }
 
-    private void initTable() {
-        try (Statement st = SOURCE.getConnection().createStatement()) {
-            st.executeUpdate(this.userScripts.getProperty("CREATE_TABLE_USERS"));
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
-        }
-    }
-
-    /**
-     * Uploading property during object creation.
-     */
-    private void initProperties() {
-        try (InputStream in = UserDAO.class.getClassLoader().getResourceAsStream("users_db.sql")) {
-            this.userScripts.load(in);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new IllegalStateException(e);
-        }
-    }
-
     @Override
     public List<User> findAll() {
         List<User> allUsers = new ArrayList<>();
-        try (Statement st = SOURCE.getConnection().createStatement()) {
-            try (ResultSet rs = st.executeQuery(this.userScripts.getProperty("SELECT_ALL"))) {
-                while (rs.next()) {
-                    allUsers.add(this.createUser(rs));
-                }
+        try (Connection connection = SOURCE.getConnection();
+             Statement st = connection.createStatement();
+             ResultSet rs = st.executeQuery("SELECT * FROM users")) {
+            while (rs.next()) {
+                allUsers.add(this.createUser(rs));
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
@@ -85,7 +61,8 @@ public class UserDAO implements Store<User> {
 
     @Override
     public User findById(int id) {
-        try (PreparedStatement ps = SOURCE.getConnection().prepareStatement(this.userScripts.getProperty("FIND_USER_BY_ID"))) {
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE id = ?")) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -101,7 +78,9 @@ public class UserDAO implements Store<User> {
     @Override
     public boolean add(User user) {
         boolean result = false;
-        try (PreparedStatement ps = SOURCE.getConnection().prepareStatement(this.userScripts.getProperty("ADD_USER"))) {
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "INSERT INTO users (name, login, password, email, creatDate) VALUES (?, ?, ?, ?, ?)")) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
@@ -118,7 +97,8 @@ public class UserDAO implements Store<User> {
     @Override
     public boolean delete(User user) {
         boolean result = false;
-        try (PreparedStatement ps = SOURCE.getConnection().prepareStatement(this.userScripts.getProperty("DELETE_USER"))) {
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
             ps.setInt(1, user.getId());
             ps.execute();
             result = true;
@@ -131,7 +111,9 @@ public class UserDAO implements Store<User> {
     @Override
     public boolean update(User user) {
         boolean result = false;
-        try (PreparedStatement ps = SOURCE.getConnection().prepareStatement(this.userScripts.getProperty("UPDATE_USER"))) {
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement(
+                     "UPDATE users SET name = ?, login = ?, password = ?, email = ? WHERE id = ?")) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
@@ -147,7 +129,8 @@ public class UserDAO implements Store<User> {
 
     public boolean userLoginIsExists(User user) {
         boolean result = false;
-        try (PreparedStatement ps = SOURCE.getConnection().prepareStatement(this.userScripts.getProperty("FIND_USER_BY_LOGIN"))) {
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT id FROM users WHERE login = ?")) {
             ps.setString(1, user.getLogin());
             try (ResultSet rs = ps.executeQuery()) {
                 result = rs.next();

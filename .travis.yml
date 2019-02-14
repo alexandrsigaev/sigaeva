@@ -20,6 +20,6 @@ after_success:
 notifications:
   email:
     recipients:
-      -sigaev.aleksandr.v@yandex.ru
+      -mailto:sigaev.aleksandr.v@yandex.ru
     on_success: never # default: change
     on_failure: always # default: always

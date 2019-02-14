@@ -139,7 +139,7 @@ public class TrackerSQL implements ITracker, AutoCloseable {
             Integer id = resultSet.getInt("id");
             String name = resultSet.getString("name");
             String description = resultSet.getString("description");
-            Long created = resultSet.getTimestamp("creat").getTime();
+            Long created = resultSet.getTimestamp("created").getTime();
             Item item = new Item(id.toString(), name, description, created);
             items.add(item);
         }

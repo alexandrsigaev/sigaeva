@@ -3,6 +3,7 @@ package ru.job4j.io.sortfile;
 import org.apache.log4j.Logger;
 
 import java.io.*;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -55,8 +56,8 @@ public class BigFileSorter implements Sorter {
      */
     private List<File> split(File file) {
         List<File> result = new ArrayList<>(1000);
-        LOGGER.info("Начинаем разбивать огромный файл");
-        try (var reader = new BufferedReader(new FileReader(file), 200000)) {
+        LOGGER.info("Start fraction big file");
+        try (var reader = new BufferedReader(new FileReader(file, Charset.defaultCharset()), 200000)) {
             String tmp;
             int count = 0;
             while ((tmp = reader.readLine()) != null) {
@@ -69,7 +70,7 @@ public class BigFileSorter implements Sorter {
                     }
                     while (result.get(count - 1).length() <= this.memoryUsage && tmp != null);
                 }
-                LOGGER.info("Создан временный файл" + result.get(count - 1));
+                LOGGER.info("Create temp file" + result.get(count - 1));
             }
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
@@ -84,7 +85,7 @@ public class BigFileSorter implements Sorter {
      * @return список мелких файлов в которых произведена сортировка по длинне строки.
      */
     private List<File> sortStringInTempFiles(List<File> files) {
-        LOGGER.info("Начинаем сортировку временных файлов");
+        LOGGER.info("Start sort temp file");
         for (File tempFile : files) {
             List<String> tempListStr;
             try {
@@ -100,7 +101,7 @@ public class BigFileSorter implements Sorter {
             } catch (IOException e) {
                 LOGGER.error(e.getMessage(), e);
             }
-            LOGGER.info(String.format("Файл %s Отсортирован", tempFile.getName()));
+            LOGGER.info(String.format("File %s sorted", tempFile.getName()));
         }
         return files;
     }
@@ -112,13 +113,13 @@ public class BigFileSorter implements Sorter {
      * @return Выходной файл
      */
     private File mergeFiles(List<File> files) {
-        LOGGER.info("Начинаем сливать отсортированные файлы");
+        LOGGER.info("Begin to merge sorted files");
         File distance = files.get(0);
         for (int i = 1; i < files.size(); i++) {
             distance = mergeFiles(distance, files.get(i));
             files.get(i).deleteOnExit();
         }
-        LOGGER.info("Получен отсортированный файл");
+        LOGGER.info("Get sorted file");
         return distance;
     }
 
@@ -130,7 +131,7 @@ public class BigFileSorter implements Sorter {
      * @return выходной отсортированный файл полученный с помощью слияния двух входных файлов
      */
     private File mergeFiles(File f1, File f2) {
-        LOGGER.info(String.format("Начнаем сливать файлы: %s & %s", f1.getName(), f2.getName()));
+        LOGGER.info(String.format("Begin to merge files: %s & %s", f1.getName(), f2.getName()));
         File result = null;
         try {
             result = File.createTempFile("merge", "txt");
@@ -166,7 +167,7 @@ public class BigFileSorter implements Sorter {
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
-        LOGGER.info(String.format("Слиты файлы: %s & %s", f1.getName(), f2.getName()));
+        LOGGER.info(String.format("merge: %s & %s", f1.getName(), f2.getName()));
         return result;
     }
 }

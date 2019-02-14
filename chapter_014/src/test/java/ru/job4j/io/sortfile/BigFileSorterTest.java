@@ -18,9 +18,11 @@ import static org.hamcrest.core.Is.is;
  */
 public class BigFileSorterTest {
     @Test
+    //@Ignore
     public void whenSortBigFile() throws IOException {
         BigFileSorter sorter = new BigFileSorter();
         sorter.sort(new File("source"), new File("dest"));
-        assertThat(Files.readAllLines(Paths.get("dest")), is(Files.readAllLines(Paths.get("destTest"))));
+        assertThat(Files.readAllLines(Paths.get("./dest")),
+                is(Files.readAllLines(Paths.get("./destTest"))));
     }
 }

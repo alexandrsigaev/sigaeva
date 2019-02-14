@@ -23,6 +23,7 @@
         <module>chapter_004</module>
         <module>chapter_014</module>
         <module>chapter_021</module>
+        <module>liquibase</module>
     </modules>
 
     <build>
@@ -164,7 +165,6 @@
             <artifactId>javafx-base</artifactId>
             <version>11</version>
         </dependency>
-
         <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-controls -->
         <dependency>
             <groupId>org.openjfx</groupId>
