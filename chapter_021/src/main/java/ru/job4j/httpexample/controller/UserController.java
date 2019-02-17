@@ -25,13 +25,19 @@ public class UserController extends HttpServlet {
     private final DispatchActions actions = new DispatchActions();
 
     @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("users", logic.findAll());
+        req.getRequestDispatcher("/WEB-INF/jsp/UserView.jsp").forward(req, resp);
+    }
+
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String action = req.getParameter("action");
         Map<String, String[]> parameters = req.getParameterMap();
         String result;
         result = actions.execute(action, parameters);
         req.setAttribute("massage", result);
-        req.getRequestDispatcher("/jsp/changeResponseUser.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/ChangeResponseUser.jsp").forward(req, resp);
     }
 
 
@@ -64,7 +70,7 @@ public class UserController extends HttpServlet {
                         if (!logic.delete(stringMap)) {
                             return "User not found!";
                         }
-                        return String.format("User with ID %s deleted!", stringMap.get("id")[0]);
+                        return String.format("User: %s deleted!", stringMap.get("name")[0]);
                     }
             );
         }

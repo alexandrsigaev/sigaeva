@@ -1,5 +1,8 @@
 package ru.job4j.httpexample.controller;
 
+import ru.job4j.httpexample.model.User;
+import ru.job4j.httpexample.service.UserService;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,8 +19,13 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/update")
 public class UserUpdateController extends HttpServlet {
 
+    private final UserService logic = UserService.getInstance();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
-        req.getRequestDispatcher("/jsp/updateUser.jsp").forward(req, resp);
+        String par = req.getParameter("id");
+        User user = logic.findById(Integer.parseInt(par));
+        req.setAttribute("user", user);
+        req.getRequestDispatcher("/WEB-INF/jsp/UpdateUser.jsp").forward(req, resp);
     }
 }

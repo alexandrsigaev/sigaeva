@@ -1,16 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <title>Create</title>
-    <link href='css/style.css' rel='stylesheet' type='text/css'>
+    <link href="<c:url value="/resources/css/style.css"/>" rel="stylesheet">
 </head>
 <body>
-<form action="<%=request.getContextPath()%>/list" method="post"></form>
+<form action='${pageContext.servletContext.contextPath}/list' method='post'></form>
 <div class="form-style-2-heading">
     <h1>Create User!</h1>
 </div>
     <div class="form-style-2">
-        <form action='<%=request.getContextPath()%>/list?action=create' method='post'>
+        <form action='${pageContext.servletContext.contextPath}/list?action=create' method='post'>
         <table>
             <tr>
                 <th>Name:<th>
