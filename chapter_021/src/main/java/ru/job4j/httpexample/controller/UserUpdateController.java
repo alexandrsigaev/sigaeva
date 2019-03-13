@@ -26,6 +26,7 @@ public class UserUpdateController extends HttpServlet {
         String par = req.getParameter("id");
         User user = logic.findById(Integer.parseInt(par));
         req.setAttribute("user", user);
+        req.setAttribute("login_user", logic.findUserByLogin((String) req.getSession().getAttribute("login")));
         req.getRequestDispatcher("/WEB-INF/jsp/UpdateUser.jsp").forward(req, resp);
     }
 }

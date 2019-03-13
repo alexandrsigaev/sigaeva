@@ -45,6 +45,15 @@
                     <input class="input-field" type='text' name='email'/>
                 </label>
             </td>
+            <tr>
+                <th>Role<th>
+            </tr>
+            <td>
+                <select name="role">
+                    <option value="admin">Administrator</option>
+                    <option value="user">User</option>
+                </select>
+            </td>
         </table>
             <input type='submit' value='create'/>
         </form>

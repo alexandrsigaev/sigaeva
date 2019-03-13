@@ -27,6 +27,7 @@ public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("users", logic.findAll());
+        req.setAttribute("login_user", logic.findUserByLogin((String) req.getSession().getAttribute("login")));
         req.getRequestDispatcher("/WEB-INF/jsp/UserView.jsp").forward(req, resp);
     }
 

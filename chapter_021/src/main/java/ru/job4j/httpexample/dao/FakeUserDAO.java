@@ -19,8 +19,8 @@ public class FakeUserDAO implements Store<User> {
     private static final FakeUserDAO INSTANCE = new FakeUserDAO();
 
     private FakeUserDAO() {
-        users.add(new User(1, "Vasya", "vasyalogn", "vasya@123.ru", "qwerty123", LocalDateTime.now()));
-        users.add(new User(2, "Olya", "olyalogn", "olya@123.ru", "qwerty123", LocalDateTime.now()));
+        users.add(new User(1, "Vasya", "vasyalogn", "vasya@123.ru", "qwerty123", "admin", LocalDateTime.now()));
+        users.add(new User(2, "Olya", "olyalogn", "olya@123.ru", "qwerty123", "user", LocalDateTime.now()));
     }
 
     public static FakeUserDAO getInstance() {
@@ -65,7 +65,7 @@ public class FakeUserDAO implements Store<User> {
     }
 
     @Override
-    public boolean userLoginIsExists(User user) {
-        return this.users.stream().anyMatch(u -> u.getLogin().equals(user.getLogin()));
+    public User userLoginIsExists(String login) {
+        return this.users.stream().filter(user -> user.getLogin().equals(login)).findAny().orElse(null);
     }
 }

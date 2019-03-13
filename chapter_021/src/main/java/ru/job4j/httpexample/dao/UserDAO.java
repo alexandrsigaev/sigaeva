@@ -76,16 +76,34 @@ public class UserDAO implements Store<User> {
     }
 
     @Override
+    public User userLoginIsExists(String login) {
+        User user = null;
+        try (Connection connection = SOURCE.getConnection();
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE login = ?")) {
+            ps.setString(1, login);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    user = this.createUser(rs);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    @Override
     public boolean add(User user) {
         boolean result = false;
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "INSERT INTO users (name, login, password, email, creatDate) VALUES (?, ?, ?, ?, ?)")) {
+                     "INSERT INTO users (name, login, password, email, role, creatDate) VALUES (?, ?, ?, ?, ?, ?)")) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getLogin());
             ps.setString(3, user.getPassword());
             ps.setString(4, user.getEmail());
-            ps.setTimestamp(5, Timestamp.valueOf(user.getCreateDate()));
+            ps.setString(5, user.getRole());
+            ps.setTimestamp(6, Timestamp.valueOf(user.getCreateDate()));
             ps.execute();
             result = true;
         } catch (SQLException e) {
@@ -113,30 +131,16 @@ public class UserDAO implements Store<User> {
         boolean result = false;
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement ps = connection.prepareStatement(
-                     "UPDATE users SET name = ?, login = ?, password = ?, email = ? WHERE id = ?")) {
+                     "UPDATE users SET name = ?, password = ?, email = ?, role = ? WHERE id = ?")) {
             ps.setString(1, user.getName());
-            ps.setString(2, user.getLogin());
-            ps.setString(3, user.getPassword());
-            ps.setString(4, user.getEmail());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getRole());
             ps.setInt(5, user.getId());
             result = ps.executeUpdate() == 1;
         } catch (SQLException e) {
             LOGGER.error(e.getMessage(), e);
 
-        }
-        return result;
-    }
-
-    public boolean userLoginIsExists(User user) {
-        boolean result = false;
-        try (Connection connection = SOURCE.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT id FROM users WHERE login = ?")) {
-            ps.setString(1, user.getLogin());
-            try (ResultSet rs = ps.executeQuery()) {
-                result = rs.next();
-            }
-        } catch (SQLException e) {
-            LOGGER.error(e.getMessage(), e);
         }
         return result;
     }
@@ -147,7 +151,8 @@ public class UserDAO implements Store<User> {
         String login = resultSet.getString("login");
         String email = resultSet.getString("email");
         String password = resultSet.getString("password");
+        String role = resultSet.getString("role");
         LocalDateTime creatDate = resultSet.getTimestamp("creatDate").toLocalDateTime();
-        return new User(id, name, login, password, email, creatDate);
+        return new User(id, name, login, password, email, role, creatDate);
     }
 }

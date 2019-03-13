@@ -30,9 +30,10 @@ public class UserService {
                 mapReq.get("name")[0],
                 mapReq.get("login")[0],
                 mapReq.get("password")[0],
-                mapReq.get("email")[0]);
+                mapReq.get("email")[0],
+                mapReq.get("role")[0]);
         boolean result = false;
-        if (!this.userDAO.userLoginIsExists(user) && this.validAttributeOfNull(mapReq)) {
+        if (this.userDAO.userLoginIsExists(user.getLogin()) == null && this.validAttributeOfNull(mapReq)) {
             result = userDAO.add(user);
         }
         return result;
@@ -48,6 +49,7 @@ public class UserService {
                     mapReq.get("login")[0],
                     mapReq.get("password")[0],
                     mapReq.get("email")[0],
+                    mapReq.get("role")[0],
                     tmp.getCreateDate());
             result = this.userDAO.update(user);
         }
@@ -81,5 +83,18 @@ public class UserService {
             }
         }
         return !res;
+    }
+
+    public boolean isCredentional(String login, String password) {
+        boolean result = false;
+        User user = userDAO.userLoginIsExists(login);
+        if (user != null) {
+            result = user.getPassword().equals(password);
+        }
+        return result;
+    }
+
+    public User findUserByLogin(String login) {
+        return userDAO.userLoginIsExists(login);
     }
 }

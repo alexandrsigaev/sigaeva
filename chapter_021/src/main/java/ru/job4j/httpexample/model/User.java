@@ -15,22 +15,25 @@ public class User {
     private String login;
     private String password;
     private String email;
+    private String role;
     private LocalDateTime createDate;
 
-    public User(String name, String login, String password, String email) {
+    public User(String name, String login, String password, String email, String role) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
+        this.role = role;
         this.createDate = LocalDateTime.now();
     }
 
-    public User(int id, String name, String login, String password, String email, LocalDateTime createDate) {
+    public User(int id, String name, String login, String password, String email, String role, LocalDateTime createDate) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.email = email;
         this.password = password;
+        this.role = role;
         this.createDate = createDate;
     }
 
@@ -82,26 +85,29 @@ public class User {
         this.email = email;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof User)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
         User user = (User) o;
-        return getId() == user.getId()
-                && Objects.equals(getName(), user.getName())
-                && Objects.equals(getLogin(), user.getLogin())
-                && Objects.equals(getPassword(), user.getPassword())
-                && Objects.equals(getEmail(), user.getEmail())
-                && Objects.equals(getCreateDate(), user.getCreateDate());
+        return Objects.equals(login, user.login);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getLogin(), getPassword(), getEmail(), getCreateDate());
+        return Objects.hash(login);
     }
 
     @Override
@@ -112,7 +118,7 @@ public class User {
                 + ", login='" + login + '\''
                 + ", password='" + password + '\''
                 + ", email='" + email + '\''
-                + ", createDate=" + createDate
-                + '}';
+                + ", role='" + role + '\''
+                + ", createDate=" + createDate + '}';
     }
 }

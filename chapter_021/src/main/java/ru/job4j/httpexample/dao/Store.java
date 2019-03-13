@@ -14,5 +14,5 @@ public interface Store<E> {
     boolean delete(E e);
     List<E> findAll();
     E findById(int id);
-    boolean userLoginIsExists(E e);
+    E userLoginIsExists(String login);
 }
