@@ -1,6 +1,7 @@
 package ru.job4j.httpexample.controller;
 
 import ru.job4j.httpexample.service.UserService;
+import ru.job4j.httpexample.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,7 +22,7 @@ import java.util.function.Function;
 @WebServlet(urlPatterns = "/list", loadOnStartup = 1)
 public class UserController extends HttpServlet {
 
-    private final UserService logic = UserService.getInstance();
+    private final UserService logic = UserServiceImpl.getInstance();
     private final DispatchActions actions = new DispatchActions();
 
     @Override

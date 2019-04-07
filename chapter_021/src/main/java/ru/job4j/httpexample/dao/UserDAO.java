@@ -1,7 +1,8 @@
 package ru.job4j.httpexample.dao;
 
 import org.apache.commons.dbcp2.BasicDataSource;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import ru.job4j.httpexample.model.User;
 
 import java.io.IOException;
@@ -19,8 +20,8 @@ import java.util.Properties;
  * @since 26.01.2019
  */
 public class UserDAO implements Store<User> {
-    private static final BasicDataSource SOURCE = new BasicDataSource();
-    private static final Logger LOGGER = Logger.getLogger(UserDAO.class.getName());
+    private static BasicDataSource source = new BasicDataSource();
+    private static final Logger LOGGER = LogManager.getLogger(UserDAO.class.getName());
     private static final UserDAO INSTANCE = new UserDAO();
 
 
@@ -28,13 +29,13 @@ public class UserDAO implements Store<User> {
         Properties properties = new Properties();
         try (InputStream in = UserDAO.class.getClassLoader().getResourceAsStream("app.properties")) {
             properties.load(in);
-            SOURCE.setDriverClassName(properties.getProperty("driver-class-name"));
-            SOURCE.setUrl(properties.getProperty("url"));
-            SOURCE.setUsername(properties.getProperty("username"));
-            SOURCE.setPassword(properties.getProperty("password"));
-            SOURCE.setMinIdle(5);
-            SOURCE.setMaxIdle(10);
-            SOURCE.setMaxOpenPreparedStatements(100);
+            source.setDriverClassName(properties.getProperty("driver-class-name"));
+            source.setUrl(properties.getProperty("url"));
+            source.setUsername(properties.getProperty("username"));
+            source.setPassword(properties.getProperty("password"));
+            source.setMinIdle(5);
+            source.setMaxIdle(10);
+            source.setMaxOpenPreparedStatements(100);
         } catch (IOException e) {
             LOGGER.error(e.getMessage(), e);
         }
@@ -47,7 +48,7 @@ public class UserDAO implements Store<User> {
     @Override
     public List<User> findAll() {
         List<User> allUsers = new ArrayList<>();
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = source.getConnection();
              Statement st = connection.createStatement();
              ResultSet rs = st.executeQuery("SELECT * FROM users")) {
             while (rs.next()) {
@@ -61,7 +62,7 @@ public class UserDAO implements Store<User> {
 
     @Override
     public User findById(int id) {
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = source.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE id = ?")) {
             ps.setInt(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -78,8 +79,8 @@ public class UserDAO implements Store<User> {
     @Override
     public User userLoginIsExists(String login) {
         User user = null;
-        try (Connection connection = SOURCE.getConnection();
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE login = ?")) {
+        try (Connection connection = source.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM users WHERE login = ?")) {
             ps.setString(1, login);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -95,7 +96,7 @@ public class UserDAO implements Store<User> {
     @Override
     public boolean add(User user) {
         boolean result = false;
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = source.getConnection();
              PreparedStatement ps = connection.prepareStatement(
                      "INSERT INTO users (name, login, password, email, role, creatDate) VALUES (?, ?, ?, ?, ?, ?)")) {
             ps.setString(1, user.getName());
@@ -115,7 +116,7 @@ public class UserDAO implements Store<User> {
     @Override
     public boolean delete(User user) {
         boolean result = false;
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = source.getConnection();
              PreparedStatement ps = connection.prepareStatement("DELETE FROM users WHERE id = ?")) {
             ps.setInt(1, user.getId());
             ps.execute();
@@ -129,7 +130,7 @@ public class UserDAO implements Store<User> {
     @Override
     public boolean update(User user) {
         boolean result = false;
-        try (Connection connection = SOURCE.getConnection();
+        try (Connection connection = source.getConnection();
              PreparedStatement ps = connection.prepareStatement(
                      "UPDATE users SET name = ?, password = ?, email = ?, role = ? WHERE id = ?")) {
             ps.setString(1, user.getName());

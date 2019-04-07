@@ -1,6 +1,7 @@
 package ru.job4j.archiver;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ import java.util.zip.ZipOutputStream;
  */
 public class ZipArchiver {
 
-    private static final Logger LOGGER = Logger.getLogger(ZipArchiver.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(ZipArchiver.class.getName());
     private String path;
     private String zipName;
     private List<String> extension;

@@ -1,6 +1,7 @@
 package ru.job4j.io.sortfile;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -22,7 +23,7 @@ public class BigFileSorter implements Sorter {
     private int memoryUsage;
     private static final int MEMORY_USAGE_MAX = 1024000;
     private static final int MEMORY_USAGE_DEFAULT = 512000;
-    private static final Logger LOGGER = Logger.getLogger(BigFileSorter.class.getName());
+    private static final Logger LOGGER = LogManager.getLogger(BigFileSorter.class.getName());
 
     public BigFileSorter() {
         this.memoryUsage = MEMORY_USAGE_DEFAULT;

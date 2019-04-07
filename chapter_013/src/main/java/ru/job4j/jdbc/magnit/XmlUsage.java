@@ -1,6 +1,7 @@
 package ru.job4j.jdbc.magnit;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 public class XmlUsage {
 
-    private final static Logger LOGGER = Logger.getLogger(XmlUsage.class);
+    private final static Logger LOGGER = LogManager.getLogger(XmlUsage.class);
 
     public void createXml(List<Field> fields, String file) {
         try {

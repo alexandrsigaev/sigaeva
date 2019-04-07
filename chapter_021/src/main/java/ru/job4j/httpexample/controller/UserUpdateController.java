@@ -2,6 +2,7 @@ package ru.job4j.httpexample.controller;
 
 import ru.job4j.httpexample.model.User;
 import ru.job4j.httpexample.service.UserService;
+import ru.job4j.httpexample.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +20,7 @@ import java.io.IOException;
 @WebServlet(urlPatterns = "/update")
 public class UserUpdateController extends HttpServlet {
 
-    private final UserService logic = UserService.getInstance();
+    private final UserService logic = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {

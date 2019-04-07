@@ -1,6 +1,7 @@
 package ru.job4j.jdbc.magnit;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class Config implements AutoCloseable {
 
-    private final static Logger LOGGER = Logger.getLogger(Config.class);
+    private final static Logger LOGGER = LogManager.getLogger(Config.class);
     private final Connection connection;
 
     public Config(Connection connection) {

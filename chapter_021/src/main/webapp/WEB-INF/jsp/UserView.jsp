@@ -8,8 +8,6 @@
 </head>
 <body>
 
-<form action="/signIn"
-
 <form action="${pageContext.servletContext.contextPath}/list" method="post"></form>
 <div class="form-style-2">
     <table>

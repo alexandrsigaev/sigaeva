@@ -1,6 +1,7 @@
 package ru.job4j.jdbc.magnit;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -19,7 +20,7 @@ import java.io.IOException;
  */
 public class SAXExmpleParser {
 
-    private final static Logger LOGGER = Logger.getLogger(SAXExmpleParser.class);
+    private final static Logger LOGGER = LogManager.getLogger(SAXExmpleParser.class);
 
     public static int calculateSumOfAttributes(File file) {
         CountHandler handler = new CountHandler();

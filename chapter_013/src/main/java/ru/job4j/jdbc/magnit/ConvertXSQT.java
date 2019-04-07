@@ -1,6 +1,7 @@
 package ru.job4j.jdbc.magnit;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.xml.transform.*;
 import javax.xml.transform.stream.StreamResult;
@@ -15,7 +16,7 @@ import java.io.File;
  */
 public class ConvertXSQT {
 
-    private final static Logger LOGGER = Logger.getLogger(ConvertXSQT.class);
+    private final static Logger LOGGER = LogManager.getLogger(ConvertXSQT.class);
 
     public void convert(File source, File dest, File scheme) {
         try {

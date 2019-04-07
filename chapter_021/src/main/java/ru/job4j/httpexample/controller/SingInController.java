@@ -1,6 +1,7 @@
 package ru.job4j.httpexample.controller;
 
 import ru.job4j.httpexample.service.UserService;
+import ru.job4j.httpexample.service.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +13,12 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/signIn")
 public class SingInController extends HttpServlet {
-    private final UserService logic = UserService.getInstance();
+
+    private final UserService logic = UserServiceImpl.getInstance();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("WEB-INF/jsp/Authorisation.jsp").forward(req, resp);
+        req.getRequestDispatcher("/WEB-INF/jsp/Authorisation.jsp").forward(req, resp);
     }
 
     @Override
