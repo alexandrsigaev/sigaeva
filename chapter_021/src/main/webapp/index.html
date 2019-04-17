@@ -14,8 +14,8 @@
         <fieldset class="form-group">
             <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="Login">Login :</label>
-                    <input type="text" class="form-control" id="Login" name="login" placeholder="Login">
+                    <label for="login">Login :</label>
+                    <input type="text" class="form-control" id="login" name="login" placeholder="Login">
                 </div>
                 <div class="form-group col-md-6">
                     <label for="password">Password :</label>
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-lg btn-outline-primary">Submit</button>
+        <button type="submit" class="btn btn-lg btn-outline-primary" onclick="return validate();">Submit</button>
     </form>
 
     <div class="table-responsive" style="margin-top: 20px">
@@ -95,7 +95,20 @@
     </div>
 </div>
 
-
+<script>
+    function validate() {
+        var res = true;
+        var filds = document.getElementsByClassName('form-group');
+        for (var i = 0; i < filds.length; i++) {
+            if (filds[i].lastElementChild.value === '') {
+                alert('Please fill in all fields.');
+                res = false;
+                break;
+            }
+        }
+        return res;
+    }
+</script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
