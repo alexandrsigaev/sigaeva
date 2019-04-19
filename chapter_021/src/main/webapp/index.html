@@ -42,7 +42,7 @@
         <fieldset class="form-group">
             <div class="row">
                 <legend class="col-form-label col-sm-2 pt-0">Sex :</legend>
-                <div class="col-sm-10">
+                <div class="col-sm-10" id="sex">
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="sex" id="male" value="male" checked>
                         <label class="form-check-label" for="male">
@@ -74,10 +74,11 @@
             </div>
         </div>
         <button type="submit" class="btn btn-lg btn-outline-primary" onclick="return validate();">Submit</button>
+        <button type="submit" class="btn btn-lg btn-outline-primary" onclick="return addRow();">Add</button>
     </form>
 
     <div class="table-responsive" style="margin-top: 20px">
-        <table class="table">
+        <table class="table" id="table">
             <thead>
             <tr>
                 <th>#</th>
@@ -89,7 +90,9 @@
             </tr>
             </thead>
             <tbody>
+                <tr>
 
+                </tr>
             </tbody>
         </table>
     </div>
@@ -98,7 +101,6 @@
 <script>
     function validate() {
         var res = true;
-        var filds = document.getElementsByClassName('form-group');
         for (var i = 0; i < filds.length; i++) {
             if (filds[i].lastElementChild.value === '') {
                 alert('Please fill in all fields.');
@@ -107,6 +109,28 @@
             }
         }
         return res;
+    }
+    function addRow() {
+        $('#table tr:last').after('' +
+            '<tr>' +
+                '<td>' + '1' +'</td>' +
+                '<td>' + $('#login').val() +'</td>' +
+                '<td>' + $('#UserName').val() +'</td>' +
+                '<td>' + $('#UserSurname').val() +'</td>' +
+                '<td>' + $('#email').val() + '</td>' +
+                '<td>' + sexInTable() +'</td>' +
+            '</tr>');
+    }
+
+    function sexInTable() {
+        var rates = document.getElementsByName('sex');
+        var rate_value;
+        for(var i = 0; i < rates.length; i++){
+            if(rates[i].checked){
+                rate_value = rates[i].value;
+            }
+        }
+        return rate_value;
     }
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
