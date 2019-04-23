@@ -27,14 +27,22 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean add(Map<String, String[]> mapReq) {
+        boolean result = false;
         User user = new User(
                 mapReq.get("name")[0],
                 mapReq.get("login")[0],
                 mapReq.get("password")[0],
                 mapReq.get("email")[0],
                 mapReq.get("role")[0]);
+        if (this.atributeIsNotEmpty(mapReq)) {
+            result = add(user);
+        }
+        return result;
+    }
+
+    public boolean add(User user) {
         boolean result = false;
-        if (this.userDAO.userLoginIsExists(user.getLogin()) == null && this.validAttributeOfNull(mapReq)) {
+        if (this.userDAO.userLoginIsExists(user.getLogin()) == null) {
             result = userDAO.add(user);
         }
         return result;
@@ -45,7 +53,7 @@ public class UserServiceImpl implements UserService {
         int id = Integer.parseInt(mapReq.get("id")[0]);
         boolean result = false;
         User tmp = this.findById(id);
-        if (tmp != null && this.validAttributeOfNull(mapReq)) {
+        if (tmp != null && this.atributeIsNotEmpty(mapReq)) {
             User user = new User(id,
                     mapReq.get("name")[0],
                     mapReq.get("login")[0],
@@ -79,7 +87,7 @@ public class UserServiceImpl implements UserService {
         return userDAO.findById(id);
     }
 
-    private boolean validAttributeOfNull(Map<String, String[]> mapReq) {
+    private boolean atributeIsNotEmpty(Map<String, String[]> mapReq) {
         boolean res = false;
         for (Map.Entry<String, String[]> entry : mapReq.entrySet()) {
             if (entry.getValue()[0].length() == 0) {

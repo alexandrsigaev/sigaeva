@@ -6,7 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <script src="https://code.jquery.com/jquery-3.4.0.js"
+            integrity="sha256-DYZMCC8HTC+QDr5QNaIcfR7VSPtcISykd+6eSmBW5qo="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container">
@@ -36,6 +44,10 @@
                 <div class="form-group col-md-6">
                     <label for="email">Email :</label>
                     <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="role">Email :</label>
+                    <input type="hidden" class="form-control" id="role" name="role" value="user">
                 </div>
             </div>
         </fieldset>
@@ -90,19 +102,21 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
+            <tr>
 
-                </tr>
+            </tr>
             </tbody>
         </table>
     </div>
 </div>
 
 <script>
+
     function validate() {
+        var fields = document.getElementsByClassName('form-group');
         var res = true;
-        for (var i = 0; i < filds.length; i++) {
-            if (filds[i].lastElementChild.value === '') {
+        for (var i = 0; i < fields.length; i++) {
+            if (fields[i].lastElementChild.value === '') {
                 alert('Please fill in all fields.');
                 res = false;
                 break;
@@ -110,37 +124,73 @@
         }
         return res;
     }
-    function addRow() {
-        $('#table tr:last').after('' +
-            '<tr>' +
-                '<td>' + '1' +'</td>' +
-                '<td>' + $('#login').val() +'</td>' +
-                '<td>' + $('#UserName').val() +'</td>' +
-                '<td>' + $('#UserSurname').val() +'</td>' +
-                '<td>' + $('#email').val() + '</td>' +
-                '<td>' + sexInTable() +'</td>' +
-            '</tr>');
+
+
+    function createNewUser() {
+        var user = {
+            login: $('#login').val(),
+            name: $('#UserName').val(),
+            //surname: $('#UserSurname').val(),
+            email: $('#email').val(),
+            password: $('#password').val(),
+            //sex: sexInTable(),
+            //aboutMe: $('#TextareaAboutMe').val(),
+            role: $('#role').val()
+        }
+
+        $.ajax({
+            type: "POST",
+            url: './json',
+            data: JSON.stringify(user),
+            complete: function (data) {
+                console.log(data);
+            },
+            dataType: 'json'
+        });
+
     }
+
+    function addRow() {
+        if (validate()) {
+            createNewUser();
+        }
+
+    }
+
+    $($.ajax({
+        method: "get",
+        url: "./json",
+        complete: function (data) {
+            var userList = JSON.parse(data.responseText);
+            var result = "";
+            for (var i = 0; i < userList.length; i++) {
+                result = result.concat(
+                    '<tr>' +
+                    '<td>' + i + '</td>' +
+                    '<td>' + userList[i].login + '</td>' +
+                    '<td>' + userList[i].name + '</td>' +
+                    '<td>' + '-' + '</td>' +
+                    '<td>' + userList[i].email + '</td>' +
+                    '<td>' + '-' + '</td>' +
+                    '</tr>'
+                );
+            }
+            $('#table thead').after('<tbody>' + result + '</tbody>');
+        }
+    }));
 
     function sexInTable() {
         var rates = document.getElementsByName('sex');
         var rate_value;
-        for(var i = 0; i < rates.length; i++){
-            if(rates[i].checked){
+        for (var i = 0; i < rates.length; i++) {
+            if (rates[i].checked) {
                 rate_value = rates[i].value;
             }
         }
+
         return rate_value;
     }
 </script>
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+
 </body>
 </html>

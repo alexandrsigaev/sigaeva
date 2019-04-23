@@ -32,6 +32,11 @@ public class UserServiceStubImpl implements UserService {
     }
 
     @Override
+    public boolean add(User user) {
+        return false;
+    }
+
+    @Override
     public boolean update(Map<String, String[]> mapReq) {
         int id = Integer.parseInt(mapReq.get("id")[0]);
         boolean result = false;

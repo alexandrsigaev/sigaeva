@@ -8,6 +8,8 @@ import java.util.Map;
 public interface UserService {
     boolean add(Map<String, String[]> mapReq);
 
+    boolean add(User user);
+
     boolean update(Map<String, String[]> mapReq);
 
     boolean delete(Map<String, String[]> mapReq);
